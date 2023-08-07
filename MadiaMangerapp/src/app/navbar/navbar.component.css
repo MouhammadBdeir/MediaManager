@@ -1,0 +1,13 @@
+.custom-navbar {
+    background-color: #025373; 
+  }
+  
+  .custom-navbar .nav-link {
+    color: #F2B035; 
+    font-size: 18px; 
+  }
+  
+  .custom-navbar .navbar-nav {
+    padding: 0.5rem;
+  }
+  

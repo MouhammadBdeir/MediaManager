@@ -1,0 +1,43 @@
+.gold-color{
+    background-color: #F2B035;
+}
+.font-color-gold{
+    color: #D97904; 
+}
+
+/* Add your other CSS styles here */
+
+/* Apply this style to the card to create the dynamic effect */
+.card.dynamic-effect {
+    /* Add the initial styles for the card */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  /* Apply this style when the mouse enters the card to trigger the effect */
+  .card.dynamic-effect:hover {
+    /* Add the dynamic effect styles, for example, a slight scale increase and a box-shadow */
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Styles for the star rating container and stars */
+  .rating-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .star-rating {
+    font-size: 24px;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  
+  .star-rating .star {
+    color: gray; /* Default star color */
+  }
+  
+  .star-rating .star:hover,
+  .star-rating .star.selected {
+    color: #F2B035; /* Yellow star color when hovered or selected */
+  }
+  

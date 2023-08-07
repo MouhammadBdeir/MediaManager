@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1 class="text-center">Login</h1>
+      <form (ngSubmit)="login()" #loginForm="ngForm">
+        <div class="form-group">
+          <label for="username">Email:</label>
+          <input type="text" class="form-control" id="username" name="username" [(ngModel)]="username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Passwort:</label>
+          <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Anmelden</button>
+      </form>
+
+      <hr>
+
+      <h2 class="text-center">Social Login</h2>
+      <a href="/oauth2/authorization/google" class="btn btn-danger btn-block">
+        <i class="fab fa-google"></i> Mit Google anmelden
+      </a>
+
+      <p class="text-center mt-3">Noch nicht registriert? <a routerLink="/register">Registrieren Sie sich jetzt!</a></p>
+    </div>
+  </div>
+</div>

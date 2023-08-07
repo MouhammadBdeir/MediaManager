@@ -1,0 +1,30 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-header custom-header">
+      <h4 class="custom-font-header">Mein Profil</h4>
+    </div>
+    <div class="card-body" [@slideInOut]="isInfoVisible ? 'in' : 'out'">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td><strong class="custom-font">Benutzername:</strong></td>
+            <td><span class="custom-font-data">{{ profileData?.benutzername }}</span></td>
+          </tr>
+          <tr>
+            <td><strong class="custom-font">Email:</strong></td>
+            <td><span  class="custom-font-data">{{ profileData?.email }}</span></td>
+          </tr>
+          <tr>
+            <td><strong class="custom-font">Benutzer Role:</strong></td>
+            <td><span  class="custom-font-data">{{ profileData?.benutzerRole }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card-footer custom-header">
+      <button class="gold-color" (click)="toggleInfo()">Info anzeigen/verstecken</button>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

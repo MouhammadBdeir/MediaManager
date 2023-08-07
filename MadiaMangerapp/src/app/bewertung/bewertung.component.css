@@ -1,0 +1,29 @@
+
+ /* Add your other CSS styles here */
+
+/* Styles for the star rating container and stars */
+.star-rating {
+  font-size: 24px;
+  margin-right: 8px;
+  cursor: default; /* Prevent cursor change when hovering over stars */
+}
+
+.star-rating .star {
+  color: gray; /* Default star color */
+}
+
+.star-rating .star.selected {
+  color: #F2B035; /* Yellow star color */
+}
+
+.commenter-name {
+  font-weight: bold;
+  color:#025373;
+}
+.commenter{
+  color:#025373;
+}
+.gold-color{
+  color: #D97904;
+}
+  

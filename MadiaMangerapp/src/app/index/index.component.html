@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+
+<div class="container" style="margin-top: 30px;">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let media of medien">
+      <div class="card mb-4">
+        <div class="row no-gutters">
+          <div class="col-md-12">
+            <div class="embed-responsive embed-responsive-16by9">
+              <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/izsjRpcgfmk?showinfo=0" width="100%"></iframe>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="card-body">
+              <h5 class="card-title">{{ media.titel }}</h5>
+              <p class="card-text">Genre: {{ media.genre }}</p>
+              <p class="card-text">Regisseur: {{ media.regisseur }}</p>
+              <p class="card-text">Veröffentlichungsjahr: {{ media.veroeffentlichungsjahr }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Bewertung</h5>
+          <p>Bewertung</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

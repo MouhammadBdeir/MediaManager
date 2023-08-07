@@ -1,0 +1,25 @@
+.card-body {
+    overflow: hidden;
+  }
+  
+  .custom-header {
+    background-color: #025373; 
+  }
+  
+  .custom-font-header  {
+    color: #F2B035; 
+    font-size: 18px; 
+  }
+  .custom-font  {
+    color: #F2B035; 
+  }
+  .custom-font-data{
+    color: #025373;
+  }
+  .gold-color{
+    background-color: #F2B035;
+  }
+  .card-body{
+    background-color: #025373;
+  }
+  

@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let media of medien">
+      <div class="card mb-4 dynamic-effect">
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe class="embed-responsive-item" src="https://www.youtube.com/watch?v=uYPbbksJxIg" width="100%"></iframe>
+        </div>
+        <div class="card-body">
+          <h5 class="card-title font-color-gold mb-3">{{ media.titel }}</h5>
+          <p class="card-text">Genre: {{ media.genre }}</p>
+          <p class="card-text">Regisseur: {{ media.regisseur }}</p>
+          <p class="card-text">Veröffentlichungsjahr: {{ media.veroeffentlichungsjahr }}</p>
+          <hr style="color: #F2B035;">
+          
+          <app-bewertung [inputMedia]="media"></app-bewertung>
+          
+          <div class="mt-3">
+            <!-- Bewertungssystem mit Sternen -->
+            <div class="rating-container">
+              <span class="rating-title">Bewertung: </span>
+              <div class="star-rating">
+                <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{ 'selected': star <= selectedStars }" (click)="onStarClick(star)">&#9733;</span>
+              </div>
+              <span class="selected-stars">{{ selectedStars }} von 5 Sternen ausgewählt</span>
+            </div>
+          
+            <textarea [(ngModel)]="newComment" placeholder="Enter your comment" required="required" style="width: 100%; height: 80px;"></textarea>
+            <br>
+            <button (click)="addComment(media)" class="btn gold-color mt-2" [disabled]="isCommentEmpty()">Add Comment</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

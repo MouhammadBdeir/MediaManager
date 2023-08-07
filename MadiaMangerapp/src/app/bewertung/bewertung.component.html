@@ -1,0 +1,25 @@
+<div class="star-rating">
+  <span [ngStyle]="{ 'width.%': (mediaRatingCount(comments) / comments.length) * 20 }">
+    <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{ 'selected': star <= (mediaRatingCount(comments) / comments.length) }">&#9733;</span>
+  </span>
+  <p class="gold-color">Media Bewertung</p>
+</div>
+<hr>
+<h5 class="card-title commenter gold-color">Kommentare</h5>
+<div class="card-body" style="max-height: 200px; overflow-y: auto;">
+  <div *ngFor="let comment of comments" class="comment-item" style="margin-top: 10px;">
+    <div class="star-rating">
+      <span [ngStyle]="{ 'width.%': comment.bewertungswert * 20 }">
+        <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{ 'selected': star <= comment.bewertungswert }">&#9733;</span>
+      </span>
+    </div>
+    <p class="comment-text">
+      <span class="commenter-name" style="font-size: large;">{{ comment.benutzerprofil.benutzername }}:</span>
+      {{ comment.kommentar }}
+    </p>
+    <div *ngIf="loggedInRole === 'ADMIN' || loggedInUserName === comment.benutzerprofil.benutzername && loggedInEmail.email === comment.benutzerprofil.email">
+      <button (click)="deleteComment(comment.id)" class="btn btn-danger">Delete Comment</button>
+    </div>
+    <hr>
+  </div>
+</div>
