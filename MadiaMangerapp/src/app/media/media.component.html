@@ -2,6 +2,12 @@
 <div class="container" style="margin-top: 10px;">
   <h2>MedienList</h2>
 </div>
+<div *ngIf="successMessage" class="alert alert-success" role="alert">
+  {{ successMessage }}
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+  {{ errorMessage }}
+</div>
 <div class="container" style="margin-top: 50px;">
   <button class="btn" (click)="openCreateModal()" style="background-color: #024873; color: #F2B035;"><h6>+ Medium hinzufügen</h6></button>
   <div class="media-list-container">
@@ -18,50 +24,45 @@
           <div class="col-md-12">
             <div class="card-body" style="margin-left: 50px; height: 550px;">
               <h5 class="card-title">{{ media.titel }}</h5>
-              <p class="card-text">Genre: {{ media.genre }}</p>
-              <p class="card-text">Regisseur: {{ media.regisseur }}</p>
-              <p class="card-text">Veröffentlichungsjahr: {{ media.veroeffentlichungsjahr }}</p>
+              <p class="card-text" style="width: 300px"> {{ media.beschreibung }}</p>
+              <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
               <div class="pad-btm">
                 <button class="btn btn-success" (click)="openEditModal(media)">Edit</button>
                 <button class="btn btn-danger" (click)="confirmDelete(media.id)" style="margin-left: 5px;">Delete</button>
               </div>
-              <hr>
               <app-bewertung [inputMedia]="media"></app-bewertung>
             </div>
           </div>
         </div>
       </div>
     </div>
-  
+
   </div>
 </div>
 
-  
+
   <!-- Modal -->
-  <div #editModalElement id="editModal" class="modal">
-    <div class="modal-content">
-      <span class="close" (click)="closeEditModal()">&times;</span>
-      <h4>Edit Media</h4>
-      <div>
-        <label>Title:</label>
-        <input [(ngModel)]="editMediaData.titel" type="text">
-      </div>
-      <div>
-        <label>Genre:</label>
-        <input [(ngModel)]="editMediaData.genre" type="text">
-      </div>
-      <div>
-        <label>Regisseur:</label>
-        <input [(ngModel)]="editMediaData.regisseur" type="text">
-      </div>
-      <div>
-        <label>Veröffentlichungsjahr:</label>
-        <input [(ngModel)]="editMediaData.veroeffentlichungsjahr" type="text">
-      </div>
-      <button class="btn btn-primary" (click)="saveEditMedia()">Save</button>
+  <div #editModalElement id="editModalMedia" class="modal" >
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog" >
+      <div class="modal-content" style="background-color: #025373;">
+        <span class="close" (click)="closeEditModal()" style="color: #F2B035;font-weight: bold;">&times;</span>
+        <h4 style="margin-left: 10px; color: #F2B035;">Edit Media</h4>
+        <div class="form-group">
+          <label for="editBeschreibung" style="margin-left: 5%; color: #F2B035;">Beschreibung:</label>
+          <textarea id="editBeschreibung" style="margin-left: 5%; max-width: 90%; height: 350px;"
+            class="form-control" [(ngModel)]="editMediaData.beschreibung"></textarea>
+        </div>
+        <div class="form-group">
+          <label for="editVeroeffentlichungsjahr" style="margin-left: 5%; color: #F2B035;">Veröffentlichungsjahr:</label>
+          <input id="editVeroeffentlichungsjahr" style="margin-left: 5%; "
+            class="form-control" [(ngModel)]="editMediaData.veroeffentlichungsjahr" type="text">
+        </div>
+        <button class="btn btn-primary"  (click)="saveEditMedia()" style="margin: 5%; background-color: #F2B035; color: #025373" type="submit">Save</button>
     </div>
   </div>
-  
+</div>
+
+
   <!-- Modal -->
   <div #createModalElement id="createModal" class="modal">
     <div class="modal-content">
@@ -70,18 +71,6 @@
       <div>
         <label>Title:</label>
         <input [(ngModel)]="newMediaData.titel" type="text">
-      </div>
-      <div>
-        <label>Genre:</label>
-        <input [(ngModel)]="newMediaData.genre" type="text">
-      </div>
-      <div>
-        <label>Regisseur:</label>
-        <input [(ngModel)]="newMediaData.regisseur" type="text">
-      </div>
-      <div>
-        <label>Veröffentlichungsjahr:</label>
-        <input [(ngModel)]="newMediaData.veroeffentlichungsjahr" type="text">
       </div>
       <button class="btn btn-primary" (click)="createMedia()">Erstellen</button>
     </div>
@@ -98,7 +87,7 @@
           <th scope="col">Name</th>
           <th scope="col">Email</th>
           <th scope="col">ID</th>
-          <th scope="col">Aktionen</th> 
+          <th scope="col">Aktionen</th>
         </tr>
       </thead>
       <tbody>
@@ -114,7 +103,7 @@
       </tbody>
     </table>
   </div>
-  
+
  <!-- Modal -->
  <div #editBnutzerModalElement id="editModal" class="modal">
     <div class="modal-content">

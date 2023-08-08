@@ -285,16 +285,15 @@ body .fc-widget-header a {
 .media-list-container {
     display: flex;
     overflow-x: auto;
-    white-space: nowrap;
     padding: 10px; /* Optional padding to separate items from the edges */
   }
-  
+
   .media-list-container .col-md-4 {
     flex: 0 0 auto;
     width: 400px; /* Set the desired width for each item */
     margin-right: 10px; /* Optional margin to separate items */
   }
-  
+
   @media (max-width: 767px) {
     .media-list-container {
       display: flex; /* Display items vertically on small screens */
@@ -302,10 +301,13 @@ body .fc-widget-header a {
       justify-content: center; /* Center items on small screens */
       overflow-x: hidden; /* Hide horizontal scroll on small screens */
     }
-  
+
     .media-list-container .col-md-4 {
       width: 100%; /* Make items take full width on small screens */
       margin-bottom: 10px; /* Optional margin to separate items */
     }
   }
-  
+  .custom-modal-dialog {
+    max-width: 900px; 
+    max-height: 900px;
+  }

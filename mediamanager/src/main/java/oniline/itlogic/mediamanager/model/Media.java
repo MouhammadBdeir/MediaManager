@@ -12,26 +12,31 @@ public class Media {
     private String titel;
     private String genre;
     private String regisseur;
-    private int veroeffentlichungsjahr;
+    private String veroeffentlichungsjahr;
+    @Column(columnDefinition = "LONGTEXT")
+    private String beschreibung;
     @Column(nullable = false, updatable = false)
     private String mediaCode;
 
-    public Media(String titel, String genre, String regisseur, int veroeffentlichungsjahr, String mediaCode) {
-        this.titel = titel;
-        this.genre = genre;
-        this.regisseur = regisseur;
-        this.veroeffentlichungsjahr = veroeffentlichungsjahr;
-        this.mediaCode=mediaCode;
-    }
-
-    public Media(Long id, String titel, String genre, String regisseur, int veroeffentlichungsjahr, String mediaCode) {
+    public Media(Long id, String titel, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
         this.id = id;
         this.titel = titel;
         this.genre = genre;
         this.regisseur = regisseur;
         this.veroeffentlichungsjahr = veroeffentlichungsjahr;
-        this.mediaCode=mediaCode;
+        this.beschreibung = beschreibung;
+        this.mediaCode = mediaCode;
     }
+
+    public Media(String titel, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
+        this.titel = titel;
+        this.genre = genre;
+        this.regisseur = regisseur;
+        this.veroeffentlichungsjahr = veroeffentlichungsjahr;
+        this.beschreibung = beschreibung;
+        this.mediaCode = mediaCode;
+    }
+
     public Media() {
 
     }
@@ -60,7 +65,7 @@ public class Media {
         return regisseur;
     }
 
-    public int getVeroeffentlichungsjahr() {
+    public String getVeroeffentlichungsjahr() {
         return veroeffentlichungsjahr;
     }
 
@@ -80,7 +85,15 @@ public class Media {
         this.regisseur = regisseur;
     }
 
-    public void setVeroeffentlichungsjahr(int veröffentlichungsjahr) {
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    public void setVeroeffentlichungsjahr(String veröffentlichungsjahr) {
         this.veroeffentlichungsjahr = veröffentlichungsjahr;
     }
 }

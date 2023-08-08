@@ -14,6 +14,8 @@ import {AuthService} from '../login/LoginService ';
 })
 
 export class MediaComponent implements OnInit {
+  successMessage: string | null = null;
+  errorMessage: string | null = null;
   @ViewChild('editModalElement')
   editModalElement!: ElementRef;
   @ViewChild('editBnutzerModalElement')
@@ -25,9 +27,8 @@ export class MediaComponent implements OnInit {
   editMediaData: FilmSerien = {
     id: 0,
     titel: '',
-    genre: '',
-    regisseur: '',
-    veroeffentlichungsjahr: 0
+    beschreibung: '',
+    veroeffentlichungsjahr: '',
   };
   editBenutzerData: Benutzerprofile = {
     id: 0,
@@ -38,9 +39,8 @@ export class MediaComponent implements OnInit {
   newMediaData: FilmSerien = {
     id: 0,
     titel: '',
-    genre: '',
-    regisseur: '',
-    veroeffentlichungsjahr: 0
+    beschreibung: '',
+    veroeffentlichungsjahr: '',
   };
   constructor(private mediaService: MediaService,
     private formBuilder: FormBuilder,
@@ -52,7 +52,7 @@ export class MediaComponent implements OnInit {
       this.getMedien();
       this.loadBenutzerprofile();
     }else{
-      this.router.navigateByUrl('/login', ); 
+      this.router.navigateByUrl('/login', );
     }
   }
   getMedien() {
@@ -68,28 +68,28 @@ export class MediaComponent implements OnInit {
   deleteMedia(mediaId: number) {
     this.mediaService.delete(mediaId).subscribe(
       () => {
-        // Erfolgreich gelöscht, hier kannst du die entsprechende Aktion ausführen, wie z.B. Aktualisieren der Medienliste
+        location.reload();
+        this.showSuccessMessage("Movie erfolgreich gelöscht");
       },
       (error) => {
+        this.showErrorMessage("Movie erfolgreich gelöscht"+error)
         console.log(error);
+
       }
     );
   }
   confirmDelete(mediaId: number) {
     if (confirm("Are you sure you want to delete this media?")) {
-      // Hier kannst du den Löschvorgang ausführen
-      this.deleteMedia(mediaId);
-      // Hier kannst du die Seite aktualisieren
-      location.reload();
+      this.deleteMedia(mediaId); 
     }
   }
   editMedia(media: FilmSerien) {
-    // Implementiere die Logik für die Bearbeitung des Medieneintrags hier
+
   }
   openEditModal(media: FilmSerien) {
     this.editMediaData = { ...media };
     this.editModalElement.nativeElement.style.display = "block";
-  } 
+  }
   closeEditModal() {
     this.editModalElement.nativeElement.style.display = "none";
   }
@@ -99,9 +99,13 @@ export class MediaComponent implements OnInit {
     () => {
       // Erfolgreich aktualisiert, hier kannst du die entsprechende Aktion ausführen, wie z.B. Aktualisieren der Medienliste
       this.getMedien();
+      this.showSuccessMessage("Speichern erfolgreich!")
+      this.errorMessage = null;
     },
     (error) => {
       console.log(error);
+      this.successMessage = null;
+      this.showErrorMessage ("Fehler beim Speichern.");
     }
   );
     this.closeEditModal();
@@ -116,11 +120,12 @@ export class MediaComponent implements OnInit {
    // Hier erfolgt die Logik zum Speichern der bearbeiteten Daten
    this.mediaService.add(this.newMediaData).subscribe(
     () => {
-      // Erfolgreich aktualisiert, hier kannst du die entsprechende Aktion ausführen, wie z.B. Aktualisieren der Medienliste
+      this.showSuccessMessage("Einfügen erfolgreich!")
       this.getMedien();
     },
     (error) => {
-      console.log(error);
+      this.showErrorMessage("Movie nicht gefunden")
+      console.log("Movie wurde nicht  gefunden ",error);
     }
   );
     this.closeCreateModal();
@@ -135,7 +140,6 @@ export class MediaComponent implements OnInit {
       }
     );
   }
-  // Methode zum Bearbeiten eines Benutzers
   editBenutzer(benutzer: Benutzerprofile) {
     this.editBenutzerData = { ...benutzer };
     this.editBnutzerModalElement.nativeElement.style.display = "block";
@@ -159,5 +163,16 @@ export class MediaComponent implements OnInit {
   public getAuthService(){
     return this.authService;
   }
- 
+  private showSuccessMessage(message: string) {
+    this.successMessage = message;
+    setTimeout(() => {
+      this.successMessage = null;
+    }, 3000); // Nach 10 Sekunden ausblenden
+  }
+  private showErrorMessage(message: string) {
+    this.errorMessage = message;
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 3000); // Nach 10 Sekunden ausblenden
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { AuthService } from '../login/LoginService ';
 
 @Component({
@@ -25,4 +25,5 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.authService.logout();
   }
+
 }
