@@ -19,6 +19,7 @@ public class Bewertung {
     private Benutzerprofil benutzerprofil;
 
     private int bewertungswert;
+    @Column(columnDefinition = "LONGTEXT")
     private String kommentar;
 
     public Bewertung(Long id, Media media, Benutzerprofil benutzerprofil, int bewertungswert, String kommentar) {

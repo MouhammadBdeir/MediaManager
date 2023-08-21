@@ -9,13 +9,14 @@ public class Movie {
     private String release_date;
     private String director; // Hinweis: Diese Information muss von einer anderen Quelle bezogen werden
     private String[] genres; // Hinweis: Diese Information muss von einer anderen Quelle bezogen werden
-
+    private String URLTrailer;
     // Standardkonstruktor (wird von Jackson benötigt)
     public Movie() {}
 
     public String getTitle() {
         return title;
     }
+
 
     public void setTitle(String title) {
         this.title = title;
@@ -31,6 +32,14 @@ public class Movie {
 
     public String getRelease_date() {
         return release_date;
+    }
+
+    public String getURLTrailer() {
+        return URLTrailer;
+    }
+
+    public void setURLTrailer(String URLTrailer) {
+        this.URLTrailer = URLTrailer;
     }
 
     public void setRelease_date(String release_date) {

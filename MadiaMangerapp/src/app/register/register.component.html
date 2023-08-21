@@ -1,7 +1,10 @@
-<div class="benuzter-app d-flex justify-content-center align-items-center">
-  <div class="card" style="width: 750px;">
-    <h2 class="card-header text-center">Register</h2>
-    <div class="card-body">
+<div  class="containerLogo">
+  <h1 class="text-center logo" style="color: #F2B035; margin-top: 5%;">FakeFlix</h1>
+</div >
+<div class="benuzter-app d-flex justify-content-center align-items-center" style="margin-top: 20px; ">
+  <div class="card" style="width: 750px;" >
+    <h2 class="card-header text-center" style="background-color: #025373; color: #F2B035;">Register</h2>
+    <div class="card-body" style="background-color: #025373; color: #F2B035;">
       <form [formGroup]="registerForm" (ngSubmit)="register()">
         <div class="form-group">
           <label for="benutzername">Benutzername:</label>
@@ -17,8 +20,10 @@
           <label for="email">Email:</label>
           <input type="email" id="email" formControlName="email" required class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <button type="submit" class="btn btn-block" style="margin-top: 10px; background-color: #F2B035; color: #025373;">Register</button>
       </form>
     </div>
   </div>
 </div>
+<p class="text-center mt-3">Sie haben bereits ein Konto, melden Sie sich  <a routerLink="/login">Anmelden</a></p>
+

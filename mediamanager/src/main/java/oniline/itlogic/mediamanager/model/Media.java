@@ -13,13 +13,15 @@ public class Media {
     private String genre;
     private String regisseur;
     private String veroeffentlichungsjahr;
+    private String URLTrailer;
     @Column(columnDefinition = "LONGTEXT")
     private String beschreibung;
     @Column(nullable = false, updatable = false)
     private String mediaCode;
 
-    public Media(Long id, String titel, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
+    public Media(Long id, String titel,String URLTrailer, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
         this.id = id;
+        this.URLTrailer=URLTrailer;
         this.titel = titel;
         this.genre = genre;
         this.regisseur = regisseur;
@@ -28,8 +30,9 @@ public class Media {
         this.mediaCode = mediaCode;
     }
 
-    public Media(String titel, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
+    public Media(String titel, String genre, String regisseur, String URLTrailer,String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
         this.titel = titel;
+        this.URLTrailer=URLTrailer;
         this.genre = genre;
         this.regisseur = regisseur;
         this.veroeffentlichungsjahr = veroeffentlichungsjahr;
@@ -67,6 +70,14 @@ public class Media {
 
     public String getVeroeffentlichungsjahr() {
         return veroeffentlichungsjahr;
+    }
+
+    public String getURLTrailer() {
+        return URLTrailer;
+    }
+
+    public void setURLTrailer(String URLTrailer) {
+        this.URLTrailer = URLTrailer;
     }
 
     public void setId(Long id) {

@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { BewertungService } from '../bewertung/bewertung.server';
 import { Benutzerprofile } from '../user/benutzer';
 import { Bewertung } from '../bewertung/bewertung';
-
+import { CommonService } from '../CommonService';
 @Component({
   selector: 'app-user-home',
   templateUrl: './user-home.component.html',
@@ -16,13 +16,15 @@ export class UserHomeComponent implements OnInit {
   medien: FilmSerien[] | undefined;
   newComment: string = '';
   selectedStars: number = 0; 
+  hoveredStars: number = 0;
   constructor(
     private mediaService: MediaService,
     private authService: AuthService,
     private router: Router,
     private bewertungService: BewertungService,
-  ) {}
+    private commonService: CommonService,
 
+  ) {}
   ngOnInit() {
     if (this.authService.checkAuthStatus()) {
       this.getMedien();
@@ -30,7 +32,6 @@ export class UserHomeComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
   }
-
   getMedien() {
     this.mediaService.getMedien().subscribe(
       (data: FilmSerien[]) => {
@@ -41,43 +42,23 @@ export class UserHomeComponent implements OnInit {
       }
     );
   }
-
   isCommentEmpty(): boolean {
     return this.newComment.trim().length === 0;
   }
-
   addComment(media: FilmSerien) {
-    const benutzer: Benutzerprofile = {
-      id: 0,
-      benutzername: "string",
-      password: "string",
-      email: "string",
-    };
-
-    const newBewertung: Bewertung = {
-      id: 0,
-      benutzerprofil: benutzer,
-      filmSerien: media,
-      kommentar: this.newComment,
-      bewertungswert: this.selectedStars,
-    };
-
-    if (this.isCommentEmpty()) {
-      return;
-    }
-
-    this.bewertungService.add(newBewertung, media.id).subscribe(
-      (response: any) => {
-        console.log('Comment added successfully!');
-        this.newComment = '';
-        window.location.reload();
-      },
-      (error: any) => {
-        console.error('Error adding comment:', error);
-      }
-    );
+    this.commonService.addComment(media, this.newComment, this.selectedStars);
   }
   onStarClick(starNumber: number) {
     this.selectedStars = starNumber;
+  }
+  hoverStars(starNumber: number) {
+    for (let star = 1; star <= starNumber; star++) {
+      document.getElementById(`star-${star}`)?.classList.add('hovered');
+    }
+  }
+  unhoverStars() {
+    document.querySelectorAll('.star').forEach((star) => {
+      star.classList.remove('hovered');
+    });
   }
 }

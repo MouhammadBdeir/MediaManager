@@ -1,7 +1,14 @@
-<div class="container">
+
+<div  class="containerLogo">
+  <h1 class="text-center logo" style="color: #F2B035; margin-top: 5%;">FakeFlix</h1>
+</div >
+<div class="container" style=" margin-top: 2%;" >
   <div class="row">
     <div class="col-md-6 offset-md-3">
       <h1 class="text-center">Login</h1>
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+        {{ errorMessage }}
+      </div>
       <form (ngSubmit)="login()" #loginForm="ngForm">
         <div class="form-group">
           <label for="username">Email:</label>
@@ -11,16 +18,9 @@
           <label for="password">Passwort:</label>
           <input type="password" class="form-control" id="password" name="password" [(ngModel)]="password" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Anmelden</button>
+        <button type="submit" class="btn  btn-block" style="margin-top: 10px; background-color: #025373; color: #F2B035;">Anmelden</button>
       </form>
-
       <hr>
-
-      <h2 class="text-center">Social Login</h2>
-      <a href="/oauth2/authorization/google" class="btn btn-danger btn-block">
-        <i class="fab fa-google"></i> Mit Google anmelden
-      </a>
-
       <p class="text-center mt-3">Noch nicht registriert? <a routerLink="/register">Registrieren Sie sich jetzt!</a></p>
     </div>
   </div>

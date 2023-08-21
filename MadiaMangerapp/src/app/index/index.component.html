@@ -6,14 +6,17 @@
       <div class="card mb-4">
         <div class="row no-gutters">
           <div class="col-md-12">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/izsjRpcgfmk?showinfo=0" width="100%"></iframe>
+            <div class="col-md-12">
+              <div class="watch-responsive watch-responsive-16by9">
+                <iframe class="watch-responsive-item" [src]="media.urltrailer | safe" width="100%"></iframe>
+              </div>
             </div>
+                                                 
           </div>
           <div class="col-md-12">
             <div class="card-body">
               <h5 class="card-title">{{ media.titel }}</h5>
-              <p class="card-text" style="width: 400px"><span style="font-weight: bold;">Overview :</span> {{ media.beschreibung }}</p>
+              <p class="card-text scrollable" >{{ media.beschreibung }}</p>
               <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
             </div>
           </div>

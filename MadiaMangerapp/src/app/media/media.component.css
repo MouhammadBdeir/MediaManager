@@ -311,3 +311,16 @@ body .fc-widget-header a {
     max-width: 900px; 
     max-height: 900px;
   }
+  /*Text scrollable machen */
+  .scrollable {
+    width: 300px;
+    height: 120px;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+  
+  .scrollable::-webkit-scrollbar {
+    width: 0; /* Safari and Chrome */
+    display: none; /* Hide scrollbar for modern browsers */
+  }

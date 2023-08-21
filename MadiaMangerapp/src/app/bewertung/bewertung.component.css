@@ -1,19 +1,15 @@
-
- /* Add your other CSS styles here */
-
-/* Styles for the star rating container and stars */
 .star-rating {
-  font-size: 24px;
+  font-size: 16px;
   margin-right: 8px;
-  cursor: default; /* Prevent cursor change when hovering over stars */
+  cursor: default; 
 }
 
 .star-rating .star {
-  color: gray; /* Default star color */
+  color: gray; 
 }
 
 .star-rating .star.selected {
-  color: #F2B035; /* Yellow star color */
+  color: #F2B035; 
 }
 
 .commenter-name {
@@ -27,3 +23,64 @@
   color: #D97904;
 }
   
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  background-color: black;
+  border-radius: 50%;
+  margin: 1.5px 0;
+  display: block;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: none;
+}
+.open {
+  display: block;
+}
+.dropdown-content a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  color: black;
+
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+  
+}
+.small-button {
+  font-size: 8px; 
+  padding: 4px 8px; 
+}
+.scrollable {
+  width: 330px;
+  height: 210px;
+  overflow-y: auto;
+  scrollbar-width: none; 
+  -ms-overflow-style: none; 
+}
+
+.scrollable::-webkit-scrollbar {
+  width: 0; 
+  display: none; 
+}

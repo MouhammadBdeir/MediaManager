@@ -1,22 +1,32 @@
 
 <hr>
 <h5 class="card-title commenter gold-color">Kommentare</h5>
-<div class="card-body" style="max-height: 200px; overflow-y: auto;">
+<div class="card-body scrollable" >
   <div *ngFor="let comment of comments" class="comment-item" style="margin-top: 10px;">
-    <div class="star-rating">
-      <span [ngStyle]="{ 'width.%': comment.bewertungswert * 20 }">
-        <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{ 'selected': star <= comment.bewertungswert }">&#9733;</span>
+    <div class="comment-header">
+      <div class="dropdown" *ngIf="loggedInRole === 'ADMIN' || loggedInUserName === comment.benutzerprofil.benutzername ">
+        <button class="dropdown-btn" (click)="toggleDropdown($event)">
+          <span class="dot"></span>
+          <span class="dot"></span>
+          <span class="dot"></span>
+        </button>
+        <div class="dropdown-content" style="border-color: transparent;" [ngClass]="{ 'open': isDropdownOpen }">
+          <button (click)="deleteComment(comment.id)" class="btn btn-danger small-button">Delete</button>
+          <button class="btn btn-warning small-button">Edit</button>
+        </div>
+      </div>
+      <span class="commenter-name" style="font-size: large;">
+        {{ comment.benutzerprofil.benutzername }}
       </span>
+      <div class="star-rating" style="margin-left: 20px;">
+        <span [ngStyle]="{ 'width.%': comment.bewertungswert * 20 }">
+          <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{ 'selected': star <= comment.bewertungswert }">&#9733;</span>
+        </span>
+      </div>
     </div>
-    <p class="comment-text">
-
-      <span class="commenter-name" style="font-size: large;">{{ comment.benutzerprofil.benutzername }}:</span>
-      {{ comment.kommentar }}
+    <p class="comment-text" style="max-width: 88%;">
+      {{ comment.kommentar }} 
     </p>
-    <div *ngIf="loggedInRole === 'ADMIN' || loggedInUserName === comment.benutzerprofil.benutzername && loggedInEmail.email === comment.benutzerprofil.email">
-      <button (click)="deleteComment(comment.id)" class="btn btn-danger">X</button>
-      <button class="btn btn-warning" style="margin-left: 3px">E</button>
-    </div>
-    <hr>
+    <hr style="max-width: 85%;">
   </div>
 </div>

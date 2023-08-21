@@ -16,7 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { FooterComponent } from './footer/footer.component'; 
-
+import { SafePipe } from './safe.pipe';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,8 @@ import { FooterComponent } from './footer/footer.component';
     NavbarComponent,
     UserHomeComponent,
     FooterComponent,
+    SafePipe ,
+
   ],
   imports: [
     BrowserModule,

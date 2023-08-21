@@ -2,8 +2,6 @@ package oniline.itlogic.mediamanager.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
 import oniline.itlogic.mediamanager.model.Media;
 import oniline.itlogic.mediamanager.model.Movie;
 import oniline.itlogic.mediamanager.service.BewertungService;
@@ -17,7 +15,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -42,11 +40,14 @@ public class FilmSerieController {
     }
     @PostMapping("/add")
     public ResponseEntity<Media> addFilmSerien(@RequestBody Media media) {
-        Movie m =getMovieInfo(media.getTitel());
+        Movie m =getMovieInfoWithTrailer(media.getTitel());
         if(m!=null) {
             media.setVeroeffentlichungsjahr(m.getRelease_date());
             media.setBeschreibung(m.getOverview());
+            media.setURLTrailer(m.getURLTrailer());
+            System.err.println(m.getURLTrailer());
             Media newMedia = filmSerienService.addFilmSerien(media);
+
             return new ResponseEntity<>(newMedia, HttpStatus.CREATED);
         }else{
             System.err.println("Moive wurd nicht gefunden");
@@ -67,11 +68,13 @@ public class FilmSerieController {
         filmSerienService.deleteFilmSerien(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-    public Movie getMovieInfo(String movieName) {
+    public  Movie getMovieInfoWithTrailer(String movieName) {
         Movie movie = null;
         try {
             String apiUrl = "https://api.themoviedb.org/3/search/movie";
-            String query = "?api_key=" +"c30ab17417834ee8abfef339e2f7e20b"+ "&query=" + movieName;
+            String encodedMovieName = URLEncoder.encode(movieName, "UTF-8");
+            String apiKey = "c30ab17417834ee8abfef339e2f7e20b";
+            String query = "?api_key=" + apiKey + "&query=" + encodedMovieName;
 
             URL url = new URL(apiUrl + query);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -89,20 +92,57 @@ public class FilmSerieController {
             JsonNode resultsNode = rootNode.get("results");
 
             if (resultsNode.isArray()) {
-                for (JsonNode movieNode : resultsNode) {
-                    String title = movieNode.get("title").asText();
+                String searchQueryLowerCase = movieName.toLowerCase();
 
-                    if (title.equalsIgnoreCase(movieName)) {
+                for (JsonNode movieNode : resultsNode) {
+                    String title = movieNode.get("title").asText().toLowerCase();
+
+                    if (title.contains(searchQueryLowerCase)) {
+                        String movieId = movieNode.get("id").asText(); // Extrahiere die movieId
                         movie = objectMapper.readValue(movieNode.toString(), Movie.class);
                         System.out.println("Title: " + movie.getTitle());
                         System.out.println("Overview: " + movie.getOverview());
                         System.out.println("Release Date: " + movie.getRelease_date());
+
+                        // Fetch movie trailer
+                        movie = getMovieTrailerUrl(movieId, apiKey , movie );
+                        System.out.println("Trailer URL: " + movie.getURLTrailer());
                         System.out.println();
                         break;
                     }
                 }
             }
             connection.disconnect();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return movie;
+    }
+    public  Movie getMovieTrailerUrl(String movieId, String apiKey ,Movie movie) {
+        try {
+            String apiUrl = "https://api.themoviedb.org/3/movie/" + movieId + "/videos";
+            String query = "?api_key=" + apiKey;
+
+            URL url = new URL(apiUrl + query);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            StringBuilder response = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            reader.close();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode rootNode = objectMapper.readTree(response.toString());
+            JsonNode resultsNode = rootNode.get("results");
+
+            if (resultsNode.isArray() && resultsNode.size() > 0) {
+                String key = resultsNode.get(0).get("key").asText();
+                movie.setURLTrailer("https://www.youtube.com/embed/" + key+"?showinfo=0");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

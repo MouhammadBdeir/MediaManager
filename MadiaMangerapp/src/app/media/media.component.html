@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div class="container" style="margin-top: 10px;">
-  <h2>MedienList</h2>
+  <h2>MedienList {{ '(' }}{{ mediaCount }}{{ ')' }}</h2>
 </div>
 <div *ngIf="successMessage" class="alert alert-success" role="alert">
   {{ successMessage }}
@@ -17,14 +17,14 @@
       <div class="card mb-4">
         <div class="row no-gutters">
           <div class="col-md-12">
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe class="embed-responsive-item" src="" width="100%"></iframe>
+            <div class="watch-responsive watch-responsive-16by9">
+              <iframe class="watch-responsive-item" [src]="media.urltrailer | safe" width="100%"></iframe>
             </div>
-          </div>
+            </div>
           <div class="col-md-12">
             <div class="card-body" style="margin-left: 50px; height: 550px;">
               <h5 class="card-title">{{ media.titel }}</h5>
-              <p class="card-text" style="width: 300px"> {{ media.beschreibung }}</p>
+              <p class="card-text scrollable" >{{ media.beschreibung }}</p>
               <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
               <div class="pad-btm">
                 <button class="btn btn-success" (click)="openEditModal(media)">Edit</button>
@@ -36,17 +36,46 @@
         </div>
       </div>
     </div>
-
   </div>
 </div>
-
-
+<hr>
+<div class="container" style="margin-top: 100px;">
+  <h2>UserList {{ '(' }}{{ userCount }}{{ ')' }}</h2>
+</div>
+<div class="container" style="margin-top: 50px;">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">ID</th>
+        <th scope="col">Aktionen</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let benutzer of benutzerprofile">
+        <td>{{ benutzer.benutzername }}</td>
+        <td>{{ benutzer.email }}</td>
+        <td>{{ benutzer.id }}</td>
+        <td>
+          <!-- Buttons für Bearbeiten -->
+          <button class="btn btn-primary" (click)="editBenutzer(benutzer)">Bearbeiten</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<hr style="margin-top: 100px;">
+<app-footer></app-footer>
   <!-- Modal -->
   <div #editModalElement id="editModalMedia" class="modal" >
     <div class="modal-dialog modal-dialog-centered custom-modal-dialog" >
       <div class="modal-content" style="background-color: #025373;">
-        <span class="close" (click)="closeEditModal()" style="color: #F2B035;font-weight: bold;">&times;</span>
-        <h4 style="margin-left: 10px; color: #F2B035;">Edit Media</h4>
+        <span class="close" (click)="closeEditModal()" style="color: #F2B035;
+        margin-left: 5px;
+        font-weight: bold;
+        font-size:larger;">&times;</span>
+        <h4 style="margin-left: 43%; color: #F2B035;">Edit Media</h4>
         <div class="form-group">
           <label for="editBeschreibung" style="margin-left: 5%; color: #F2B035;">Beschreibung:</label>
           <textarea id="editBeschreibung" style="margin-left: 5%; max-width: 90%; height: 350px;"
@@ -54,56 +83,35 @@
         </div>
         <div class="form-group">
           <label for="editVeroeffentlichungsjahr" style="margin-left: 5%; color: #F2B035;">Veröffentlichungsjahr:</label>
-          <input id="editVeroeffentlichungsjahr" style="margin-left: 5%; "
+          <input id="editVeroeffentlichungsjahr" style="margin-left: 5%;max-width: 90%; "
             class="form-control" [(ngModel)]="editMediaData.veroeffentlichungsjahr" type="text">
         </div>
         <button class="btn btn-primary"  (click)="saveEditMedia()" style="margin: 5%; background-color: #F2B035; color: #025373" type="submit">Save</button>
     </div>
   </div>
 </div>
-
-
   <!-- Modal -->
-  <div #createModalElement id="createModal" class="modal">
-    <div class="modal-content">
-      <span class="close" (click)="closeCreateModal()">&times;</span>
-      <h4>Neues Medium hinzufügen</h4>
-      <div>
-        <label>Title:</label>
-        <input [(ngModel)]="newMediaData.titel" type="text">
+  <div #createModalElement id="createModal" class="modal" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background-color: #025373;">
+        <div class="modal-header">
+          <h4 class="modal-title" style=" color: #F2B035;">Neues Medium hinzufügen</h4>
+          <button type="button" class="close" (click)="closeCreateModal()" style="background-color: #F2B035; color: #025373">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="newMediaTitle"  style=" color: #F2B035;">Title:</label>
+            <input id="newMediaTitle" [(ngModel)]="newMediaData.titel" type="text" class="form-control">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeCreateModal()">Abbrechen</button>
+          <button class="btn" (click)="createMedia()" style="background-color: #F2B035; color: #025373">Erstellen</button>
+        </div>
       </div>
-      <button class="btn btn-primary" (click)="createMedia()">Erstellen</button>
     </div>
   </div>
-  <hr>
-  <div class="container" style="margin-top: 100px;">
-    <h2>UserList</h2>
-  </div>
-
-  <div class="container" style="margin-top: 50px;">
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Email</th>
-          <th scope="col">ID</th>
-          <th scope="col">Aktionen</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let benutzer of benutzerprofile">
-          <td>{{ benutzer.benutzername }}</td>
-          <td>{{ benutzer.email }}</td>
-          <td>{{ benutzer.id }}</td>
-          <td>
-            <!-- Buttons für Bearbeiten -->
-            <button class="btn btn-primary" (click)="editBenutzer(benutzer)">Bearbeiten</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+  
  <!-- Modal -->
  <div #editBnutzerModalElement id="editModal" class="modal">
     <div class="modal-content">
@@ -120,5 +128,3 @@
       <button class="btn btn-primary" (click)="saveEditBenutzer()">Save</button>
     </div>
   </div>
-  <hr style="margin-top: 100px;">
-  <app-footer></app-footer>

@@ -15,16 +15,18 @@ import { FilmSerien } from '../media/media';
 export class BewertungComponent implements OnInit, OnChanges {
   @Input() inputMedia!: FilmSerien ;
   comments!: Bewertung[] ;
+  isDropdownOpen = false;
   loggedInUserName: any | null = null;
   loggedInEmail: any | null = null;
   loggedInRole: any | null = null;
-
+  isHovered: boolean = false;
   constructor(
     private bewertungService: BewertungService,
     private authService: AuthService,
     private router: Router
   ) {}
   ngOnInit() {
+    document.addEventListener('click', () => this.closeDropdown());
     if (this.authService.checkAuthStatus()) {
       this.getComments();
     } else {
@@ -92,5 +94,17 @@ export class BewertungComponent implements OnInit, OnChanges {
     }
     return count;
   }
-  
+  toggleDropdown(event: MouseEvent): void {
+    event.stopPropagation();
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+  closeDropdown(): void {
+    this.isDropdownOpen = false;
+  }
+  hoverStars() {
+    this.isHovered = true;
+  }
+  unhoverStars() {
+    this.isHovered = false;
+  }
 }

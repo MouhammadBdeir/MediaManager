@@ -9,6 +9,7 @@ import { AuthService } from './LoginService ';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  errorMessage: string | null = null;
   username: string = "";
   password: string = "";
 
@@ -34,21 +35,28 @@ export class LoginComponent {
         this.authService.setBody(body);
         this.authService.setCurrentUser(response);
         this.authService.setAuthenticated(true); 
-        console.log('Login successful', this.authService.getBody(),":", this.authService.getHeader());
         this.router.navigateByUrl('/profile', ); 
       },
       (error: HttpErrorResponse) => {
-
         console.error('Login error', error);
         console.log(error.error); 
         if (error.status === 401) {
-          // Unauthorized error, handle accordingly
+          // Unauthorized error
+          this.showErrorMessage("Wrong email or password please try again")
         } else if (error.status === 400) {
-          // Bad request error, handle accordingly
+          // Bad request error
+          this.showErrorMessage("Bad request error")
         } else {
           // Other error scenarios
+          this.showErrorMessage("error")
         }
       }
     );
+  }
+  private showErrorMessage(message: string) {
+    this.errorMessage = message;
+    setTimeout(() => {
+      this.errorMessage = null;
+    }, 3000); // Nach 10 Sekunden ausblenden
   }
 }

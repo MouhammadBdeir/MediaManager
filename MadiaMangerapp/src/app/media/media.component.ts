@@ -7,6 +7,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { BenutzerService } from '../user/benutzer.service';
 import { Benutzerprofile } from '../user/benutzer';
 import {AuthService} from '../login/LoginService ';
+import { Observable, map } from 'rxjs';
 @Component({
   selector: 'app-media',
   templateUrl: './media.component.html',
@@ -14,6 +15,8 @@ import {AuthService} from '../login/LoginService ';
 })
 
 export class MediaComponent implements OnInit {
+  userCount: number = 0;
+  mediaCount: number = 0;
   successMessage: string | null = null;
   errorMessage: string | null = null;
   @ViewChild('editModalElement')
@@ -26,6 +29,7 @@ export class MediaComponent implements OnInit {
   benutzerprofile: Benutzerprofile[]=[];
   editMediaData: FilmSerien = {
     id: 0,
+    urltrailer:'',
     titel: '',
     beschreibung: '',
     veroeffentlichungsjahr: '',
@@ -38,6 +42,7 @@ export class MediaComponent implements OnInit {
   };
   newMediaData: FilmSerien = {
     id: 0,
+    urltrailer:'',
     titel: '',
     beschreibung: '',
     veroeffentlichungsjahr: '',
@@ -54,11 +59,13 @@ export class MediaComponent implements OnInit {
     }else{
       this.router.navigateByUrl('/login', );
     }
+    this.getUserMediaCount();
   }
   getMedien() {
     this.mediaService.getMedien().subscribe(
       (data: FilmSerien[]) => {
         this.medien = data;
+        console.log(data);
       },
       (error) => {
         console.log(error);
@@ -174,5 +181,23 @@ export class MediaComponent implements OnInit {
     setTimeout(() => {
       this.errorMessage = null;
     }, 3000); // Nach 10 Sekunden ausblenden
+  }
+  getUserMediaCount() {
+    this.benutzerService.getBenuztern().subscribe(
+      (users: Benutzerprofile[]) => {
+        this.userCount = users.length;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.mediaService.getMedien().subscribe(
+      (data: FilmSerien[]) => {
+        this.mediaCount= data.length;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

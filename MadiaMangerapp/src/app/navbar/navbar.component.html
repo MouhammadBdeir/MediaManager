@@ -1,5 +1,11 @@
-<nav class="navbar navbar-expand navbar-light d-flex justify-content-center custom-navbar">
-  <ul class="navbar-nav">
+<nav class="navbar navbar-expand navbar-light custom-navbar">
+  <a class="navbar-brand" routerLink="/" style="margin-left: 10px;">
+    <div class="containerLogo">
+      <h1 class="text-center logo">FakeFlix</h1>
+    </div>
+  </a>
+  
+  <ul class="navbar-nav mx-auto"> <!-- Center the navigation links -->
     <!-- Show "Login" link if the user is not logged in -->
     <li class="nav-item" *ngIf="!isLoggedIn">
       <a class="nav-link" routerLink="/login">Login</a>
@@ -7,7 +13,7 @@
 
     <!-- Show "Profile" and "Logout" links if the user is logged in -->
     <ng-container *ngIf="isLoggedIn">
-      <li class="nav-item"  *ngIf="isLoggedIn">
+      <li class="nav-item" *ngIf="isLoggedIn">
         <span class="nav-link">Welcome, {{ loggedInUserName }}</span>
       </li>
       <li class="nav-item" *ngIf="loggedInRole === 'ADMIN'">
