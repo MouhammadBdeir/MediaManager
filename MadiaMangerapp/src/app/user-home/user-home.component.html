@@ -16,28 +16,8 @@
 
           <app-bewertung [inputMedia]="media"></app-bewertung>
 
-          <div class="mt-3">
-            <div class="rating-container">
-              <span class="rating-title">Bewertung: </span>
-              <div class="star-rating" (mouseleave)="unhoverStars()">
-                <span
-                  *ngFor="let star of [1, 2, 3, 4, 5]"
-                  class="star"
-                  [ngClass]="{ 'selected': star <= selectedStars }"
-                  [id]="'star-' + star"
-                  (click)="onStarClick(star)"
-                  (mouseenter)="hoverStars(star)">
-                  &#9733;
-                </span>
-              </div>
-              <span class="selected-stars">{{ selectedStars }} von 5 Sternen ausgewählt</span>
-            </div>
-            
-
-            <textarea [(ngModel)]="newComment" placeholder="Enter your comment" required="required" style="width: 100%; height: 80px;"></textarea>
-            <br>
-            <button (click)="addComment(media)" class="btn gold-color mt-2" [disabled]="isCommentEmpty()">Add Comment</button>
-          </div>
+         
+          
         </div>
       </div>
     </div>

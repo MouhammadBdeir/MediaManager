@@ -6,6 +6,7 @@ import { Benutzerprofile } from '../user/benutzer';
 import { AuthService } from '../login/LoginService ';
 import { MediaComponent } from '../media/media.component';
 import { FilmSerien } from '../media/media';
+import { CommonService } from '../CommonService';
 @Component({
   selector: 'app-bewertung',
   templateUrl: './bewertung.component.html',
@@ -20,10 +21,21 @@ export class BewertungComponent implements OnInit, OnChanges {
   loggedInEmail: any | null = null;
   loggedInRole: any | null = null;
   isHovered: boolean = false;
+
+
+  newComment: string = '';
+  selectedStars: number = 0; 
+  hoveredStars: number = 0;
+  mediaDraftTextMap: { [mediaId: number]: string } = {};
+
+
   constructor(
     private bewertungService: BewertungService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+
+    private commonService: CommonService,
+
   ) {}
   ngOnInit() {
     document.addEventListener('click', () => this.closeDropdown());
@@ -44,6 +56,7 @@ export class BewertungComponent implements OnInit, OnChanges {
   ngOnChanges() {
     this.getComments();
   }
+
   getComments() {
     this.bewertungService.getBewertungen().subscribe(
       (data: Bewertung[]) => {
@@ -101,10 +114,38 @@ export class BewertungComponent implements OnInit, OnChanges {
   closeDropdown(): void {
     this.isDropdownOpen = false;
   }
+  /*
   hoverStars() {
     this.isHovered = true;
   }
   unhoverStars() {
     this.isHovered = false;
+  }*/
+
+
+
+ 
+  isCommentEmpty(): boolean {
+    
+    return this.newComment.trim().length === 0 || this.selectedStars==0;
   }
+  addComment(media: FilmSerien) {
+    this.commonService.addComment(media, this.newComment, this.selectedStars);
+  }
+
+  onStarClick(starNumber: number) {
+    this.selectedStars = starNumber;
+  }
+  hoverStars(starNumber: number) {
+    for (let star = 1; star <= starNumber; star++) {
+      document.getElementById(`star-${star}`)?.classList.add('hovered');
+    }
+  }
+  unhoverStars() {
+    document.querySelectorAll('.star').forEach((star) => {
+      star.classList.remove('hovered');
+    });
+  }
+  
+
 }

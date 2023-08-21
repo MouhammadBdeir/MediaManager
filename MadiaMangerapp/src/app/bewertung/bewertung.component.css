@@ -84,3 +84,58 @@
   width: 0; 
   display: none; 
 }
+/*design */
+.gold-color-background{
+  background-color: #F2B035;
+}
+.font-color-gold{
+  color: #D97904; 
+}
+.card.dynamic-effect {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+.card.dynamic-effect:hover {
+transform: scale(1.05);
+box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+/*Sterne bewertung */
+.star-rating {
+font-size: 24px;
+margin-right: 8px;
+cursor: pointer;
+}
+
+.star-rating .star {
+color: gray;
+transition: color 0.2s; /* Add transition for smooth effect */
+}
+
+.star-rating .star.selected,
+.star-rating .star.hovered {
+color: #F2B035;
+}
+.star:focus{
+color: #F2B035;
+}
+/*scrollen */
+.scrollable {
+width: 350px;
+height: 200px;
+overflow-y: auto;
+scrollbar-width: none; 
+-ms-overflow-style: none; 
+}
+
+.scrollable::-webkit-scrollbar {
+width: 0; 
+display: none; 
+}
+textarea {
+border-color: black; 
+color: black; 
+}
+textarea:focus {
+border-color: black; 
+background-color: #025373; 
+color: white; 
+}

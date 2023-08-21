@@ -14,7 +14,7 @@ export class CommonService {
     private bewertungService: BewertungService
   ) {}
   newComment: string = '';
-
+  selectedMedia: any = null; 
   addComment(media: FilmSerien, newComment: string, selectedStars: number) {
     const benutzer: Benutzerprofile = {
       id: 0,
@@ -22,7 +22,7 @@ export class CommonService {
       password: "string",
       email: "string",
     };
-  
+ 
     const newBewertung: Bewertung = {
       id: 0,
       benutzerprofil: benutzer,
@@ -46,7 +46,7 @@ export class CommonService {
       }
     );
   }
-  
+
   isCommentEmpty(newComment:string ): boolean {
     return newComment.trim().length === 0;
   }
