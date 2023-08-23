@@ -30,21 +30,27 @@
     <hr style="max-width: 85%;">
   </div>
 </div>
-<div class="mt-3">
+<div class="mt-3" *ngIf="shouldShowDiv()">
   <div class="rating-container">
     <span class="rating-title">Bewertung: </span>
     <div class="star-rating" (mouseleave)="unhoverStars()">
       <span
         *ngFor="let star of [1, 2, 3, 4, 5]"
         class="star"
-        [ngClass]="{ 'selected': star <= selectedStars }"
+        [ngClass]="{
+          'selected': star <= selectedStars,
+          'hovered': star <= hoveredStars && star <= selectedStars
+        }"
         [id]="'star-' + star"
         (click)="onStarClick(star)"
-        (mouseenter)="hoverStars(star)">
+        (mouseenter)="hoverStars(star)"
+        (mouseleave)="unhoverStars()">
         &#9733;
       </span>
     </div>
     <span class="selected-stars">{{ selectedStars }} von 5 Sternen ausgewählt</span>
+    
+    <span class="selected-stars" id="inputMedia.id">{{ selectedStars }} von 5 Sternen ausgewählt</span>
   </div>
   <textarea 
   [(ngModel)]="newComment"
@@ -54,4 +60,4 @@
   style="width: 100%; height: 80px;"></textarea>
   <br>
   <button (click)="addComment(inputMedia)" class="btn gold-color-background mt-2" [disabled]="isCommentEmpty()">Add Comment</button>
-
+</div>

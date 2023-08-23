@@ -17,8 +17,6 @@ export class UserHomeComponent implements OnInit {
   newComment: string = '';
   selectedStars: number = 0; 
   hoveredStars: number = 0;
-  mediaDraftTextMap: { [mediaId: number]: string } = {};
-
   constructor(
     private mediaService: MediaService,
     private authService: AuthService,
@@ -50,7 +48,6 @@ export class UserHomeComponent implements OnInit {
   addComment(media: FilmSerien) {
     this.commonService.addComment(media, this.newComment, this.selectedStars);
   }
-
   onStarClick(starNumber: number) {
     this.selectedStars = starNumber;
   }

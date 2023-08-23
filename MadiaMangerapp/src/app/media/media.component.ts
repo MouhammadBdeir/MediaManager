@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FilmSerien } from './media';
 import { MediaService } from './media.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,7 +7,12 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { BenutzerService } from '../user/benutzer.service';
 import { Benutzerprofile } from '../user/benutzer';
 import {AuthService} from '../login/LoginService ';
-import { Observable, map } from 'rxjs';
+import {BewertungService} from '../bewertung/bewertung.server';
+import { Bewertung } from '../bewertung/bewertung';
+import { Observable, map, of } from 'rxjs';
+
+
+
 @Component({
   selector: 'app-media',
   templateUrl: './media.component.html',
@@ -15,6 +20,8 @@ import { Observable, map } from 'rxjs';
 })
 
 export class MediaComponent implements OnInit {
+  @Input() inputMedia!: FilmSerien ;
+  comments!: Bewertung[] ;
   userCount: number = 0;
   mediaCount: number = 0;
   successMessage: string | null = null;
@@ -51,6 +58,7 @@ export class MediaComponent implements OnInit {
     private formBuilder: FormBuilder,
     private benutzerService: BenutzerService,
     private authService: AuthService,
+    private bewertungService:BewertungService,
     private router: Router) { }
   ngOnInit() {
     if(this.authService.checkAuthStatus()&&this.authService.getCurrentUser().benutzerRole==='ADMIN'){
@@ -91,7 +99,6 @@ export class MediaComponent implements OnInit {
     }
   }
   editMedia(media: FilmSerien) {
-
   }
   openEditModal(media: FilmSerien) {
     this.editMediaData = { ...media };
@@ -200,4 +207,5 @@ export class MediaComponent implements OnInit {
       }
     );
   }
+  
 }

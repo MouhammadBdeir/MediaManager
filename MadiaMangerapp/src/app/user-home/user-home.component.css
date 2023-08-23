@@ -13,9 +13,6 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-
-
-
 /*scrollen */
 .scrollable {
   width: 350px;
@@ -29,13 +26,4 @@
   width: 0; 
   display: none; 
 }
-textarea {
-  border-color: black; 
-  background-color: white; 
-  color: white; 
-}
-textarea:focus {
-  border-color: blue; 
-  background-color: #025373; 
-  color: white; 
-}
+

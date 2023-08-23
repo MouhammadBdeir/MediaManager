@@ -26,6 +26,7 @@
               <h5 class="card-title">{{ media.titel }}</h5>
               <p class="card-text scrollable" >{{ media.beschreibung }}</p>
               <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
+
               <div class="pad-btm">
                 <button class="btn btn-success" (click)="openEditModal(media)">Edit</button>
                 <button class="btn btn-danger" (click)="confirmDelete(media.id)" style="margin-left: 5px;">Delete</button>

@@ -1,12 +1,15 @@
 import { Component, Input, OnInit, OnChanges, EventEmitter, Output } from '@angular/core';
 import { Bewertung } from './bewertung';
 import { BewertungService } from './bewertung.server';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Benutzerprofile } from '../user/benutzer';
 import { AuthService } from '../login/LoginService ';
 import { MediaComponent } from '../media/media.component';
 import { FilmSerien } from '../media/media';
 import { CommonService } from '../CommonService';
+import { Observable, filter, map } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+
 @Component({
   selector: 'app-bewertung',
   templateUrl: './bewertung.component.html',
@@ -14,6 +17,7 @@ import { CommonService } from '../CommonService';
 })
 
 export class BewertungComponent implements OnInit, OnChanges {
+  
   @Input() inputMedia!: FilmSerien ;
   comments!: Bewertung[] ;
   isDropdownOpen = false;
@@ -21,7 +25,7 @@ export class BewertungComponent implements OnInit, OnChanges {
   loggedInEmail: any | null = null;
   loggedInRole: any | null = null;
   isHovered: boolean = false;
-
+  hideDiv: boolean = false;
 
   newComment: string = '';
   selectedStars: number = 0; 
@@ -33,8 +37,8 @@ export class BewertungComponent implements OnInit, OnChanges {
     private bewertungService: BewertungService,
     private authService: AuthService,
     private router: Router,
-
     private commonService: CommonService,
+    private activatedRoute: ActivatedRoute
 
   ) {}
   ngOnInit() {
@@ -52,10 +56,18 @@ export class BewertungComponent implements OnInit, OnChanges {
     if (currentUser.benutzerRole === "ADMIN") {
         this.loggedInRole = currentUser.benutzerRole;
     }
+
+  
+    
   }
   ngOnChanges() {
     this.getComments();
   }
+
+  shouldShowDiv(): boolean {
+    return this.activatedRoute.snapshot.url[0]?.path !== 'media';
+  }
+  
 
   getComments() {
     this.bewertungService.getBewertungen().subscribe(
@@ -66,6 +78,30 @@ export class BewertungComponent implements OnInit, OnChanges {
       (error) => {
         console.log('Error fetching comments:', error);
       }
+    );
+  }
+  public getAverageRatingForMedia(media: FilmSerien): Observable<number> {
+    return this.findCommentsForMediaUsingMedia(media).pipe(
+      map(comments => {
+        const totalRating = comments.reduce((sum, comment) => sum + comment.bewertungswert, 0);
+        const averageRating = totalRating / comments.length;
+        return averageRating;
+      })
+    );
+  }
+  public findCommentsForMediaUsingMedia(media: FilmSerien): Observable<Bewertung[]> {
+    return this.bewertungService.getBewertungen().pipe(
+      map((comments: any) => {
+        const commentsForMedia: Bewertung[] = [];
+        if (media?.id) {
+          for (const bewertung of comments) {
+            if (bewertung.filmSerien?.id === media.id) {
+              commentsForMedia.push(bewertung);
+            }
+          }
+        }
+        return commentsForMedia;
+      })
     );
   }
   findCommentsForMedia(data: Bewertung[]): Bewertung[] {
@@ -114,17 +150,6 @@ export class BewertungComponent implements OnInit, OnChanges {
   closeDropdown(): void {
     this.isDropdownOpen = false;
   }
-  /*
-  hoverStars() {
-    this.isHovered = true;
-  }
-  unhoverStars() {
-    this.isHovered = false;
-  }*/
-
-
-
- 
   isCommentEmpty(): boolean {
     
     return this.newComment.trim().length === 0 || this.selectedStars==0;
@@ -132,19 +157,25 @@ export class BewertungComponent implements OnInit, OnChanges {
   addComment(media: FilmSerien) {
     this.commonService.addComment(media, this.newComment, this.selectedStars);
   }
-
   onStarClick(starNumber: number) {
     this.selectedStars = starNumber;
   }
   hoverStars(starNumber: number) {
-    for (let star = 1; star <= starNumber; star++) {
-      document.getElementById(`star-${star}`)?.classList.add('hovered');
+    if (this.inputMedia) {
+      const mediaId = this.inputMedia.id;
+      for (let star = 1; star <= starNumber && star <= this.selectedStars; star++) {
+        document.getElementById(`media-${mediaId}-star-${star}`)?.classList.add('hovered');
+      }
+      
     }
-  }
+  }  
   unhoverStars() {
-    document.querySelectorAll('.star').forEach((star) => {
-      star.classList.remove('hovered');
-    });
+    if (this.inputMedia) {
+      const mediaId = this.inputMedia.id;
+      document.querySelectorAll(`.media-${mediaId}-star`).forEach((star) => {
+        star.classList.remove('hovered');
+      });
+    }
   }
   
 
