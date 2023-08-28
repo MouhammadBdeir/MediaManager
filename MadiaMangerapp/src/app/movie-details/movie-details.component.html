@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div class="movie-details" *ngIf="movie">
+    <div class="trailer-section">
+      <h3>Watch the Trailer</h3>
+      <div class="trailer-container">
+        <!-- Embed the trailer video here -->
+        <iframe width="560" height="315" [src]="movie.urltrailer | safe" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="movie-info">
+      <h2>{{ movie.titel }}</h2>
+      <p>{{ movie.beschreibung }}</p>
+      <app-bewertung [inputMedia]="movie"></app-bewertung>
+    </div>
+  </div>
+<app-header></app-header>
+<app-footer></app-footer>

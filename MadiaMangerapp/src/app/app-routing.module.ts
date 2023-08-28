@@ -7,6 +7,7 @@ import { MediaComponent } from './media/media.component';
 import { IndexComponent } from './index/index.component';
 import { ProfileComponent } from './profile/profile.component';
 import { UserHomeComponent } from './user-home/user-home.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'media', component: MediaComponent },
   { path: 'profile', component: ProfileComponent },
   { path: '', component: IndexComponent },
+  { path: 'movie/:id', component: MovieDetailsComponent } ,
 ];
 
 @NgModule({

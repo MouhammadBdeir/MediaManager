@@ -1,17 +1,19 @@
-<div class="header-slider">
-    <div class="card-slider-container">
+<div class="header-slider" style="background-color: transparent;">
+    <div class="card-slider-container" >
         <div *ngFor="let movie of movies; let i = index" class="card-slider-item" [class.active]="i === activeIndex">
-            <div class="card-flipper" [class.paused]="i === pausedIndex" (mouseover)="pauseSlider(i)"
+            <a [routerLink]="['/movie', movie.id]">
+            <div class="card-flipper"  [class.paused]="i === pausedIndex" (mouseover)="pauseSlider(i)"
                 (mouseout)="resumeSlider()">
-                <div class="container d-flex align-items-center justify-content-center flex-wrap">
+                <div class="container d-flex align-items-center justify-content-center flex-wrap" >
                     <div class="box">
                         <div class="body">
-                            <div class="imgContainer">
+                            <div class="imgContainer" >
                                 <img [src]="movie.imgSrc | safe"
-                                    class="card-img-top" alt="{{ movie.titel }}">
+                                    class="card-img-top" alt="{{ movie.titel }}" >
                             </div>
-                            <div class="content d-flex flex-column align-items-center justify-content-center">
+                            <div class="content d-flex flex-column align-items-center justify-content-center" style="background-color: transparent;">
                                 <div>
+                                   
                                     <h5 class="card-title">{{ movie.titel }}</h5>
                                     <p class="card-text">{{ movie.beschreibung }}</p>
                                 </div>
@@ -20,6 +22,7 @@
                     </div>
                 </div>
             </div>
+            </a>
         </div>
     </div>
 </div>

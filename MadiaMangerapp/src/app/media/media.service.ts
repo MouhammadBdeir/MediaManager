@@ -24,4 +24,7 @@ export class MediaService {
   public delete(mediaId : number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/api/delete/${mediaId}`, { withCredentials: true });
   }
+  public getMovieById(mediaId : number): Observable<FilmSerien> {
+    return this.http.get<FilmSerien>(`${this.apiServerUrl}/api/find/${mediaId}`, { withCredentials: true });
+  }
 }

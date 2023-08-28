@@ -18,6 +18,7 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { FooterComponent } from './footer/footer.component'; 
 import { SafePipe } from './safe.pipe';
 import { HeaderComponent } from './header/header.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { HeaderComponent } from './header/header.component';
     UserHomeComponent,
     FooterComponent,
     SafePipe,
-    HeaderComponent ,
+    HeaderComponent,
+    MovieDetailsComponent ,
 
   ],
   imports: [

@@ -80,30 +80,7 @@ export class BewertungComponent implements OnInit, OnChanges {
       }
     );
   }
-  public getAverageRatingForMedia(media: FilmSerien): Observable<number> {
-    return this.findCommentsForMediaUsingMedia(media).pipe(
-      map(comments => {
-        const totalRating = comments.reduce((sum, comment) => sum + comment.bewertungswert, 0);
-        const averageRating = totalRating / comments.length;
-        return averageRating;
-      })
-    );
-  }
-  public findCommentsForMediaUsingMedia(media: FilmSerien): Observable<Bewertung[]> {
-    return this.bewertungService.getBewertungen().pipe(
-      map((comments: any) => {
-        const commentsForMedia: Bewertung[] = [];
-        if (media?.id) {
-          for (const bewertung of comments) {
-            if (bewertung.filmSerien?.id === media.id) {
-              commentsForMedia.push(bewertung);
-            }
-          }
-        }
-        return commentsForMedia;
-      })
-    );
-  }
+  
   findCommentsForMedia(data: Bewertung[]): Bewertung[] {
     const commentsForMedia: Bewertung[] = [];
     if (this.inputMedia?.id) {
