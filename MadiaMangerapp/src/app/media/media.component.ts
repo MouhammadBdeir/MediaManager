@@ -40,6 +40,7 @@ export class MediaComponent implements OnInit {
     titel: '',
     beschreibung: '',
     veroeffentlichungsjahr: '',
+    imgSrc:'',
   };
   editBenutzerData: Benutzerprofile = {
     id: 0,
@@ -53,6 +54,7 @@ export class MediaComponent implements OnInit {
     titel: '',
     beschreibung: '',
     veroeffentlichungsjahr: '',
+    imgSrc:'',
   };
   constructor(private mediaService: MediaService,
     private formBuilder: FormBuilder,
@@ -73,6 +75,7 @@ export class MediaComponent implements OnInit {
     this.mediaService.getMedien().subscribe(
       (data: FilmSerien[]) => {
         this.medien = data;
+
         console.log(data);
       },
       (error) => {

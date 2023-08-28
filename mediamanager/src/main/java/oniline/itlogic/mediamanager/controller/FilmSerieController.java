@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.awt.desktop.SystemSleepListener;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -45,7 +46,7 @@ public class FilmSerieController {
             media.setVeroeffentlichungsjahr(m.getRelease_date());
             media.setBeschreibung(m.getOverview());
             media.setURLTrailer(m.getURLTrailer());
-            System.err.println(m.getURLTrailer());
+            media.setImgSrc(m.getImgSrc());
             Media newMedia = filmSerienService.addFilmSerien(media);
 
             return new ResponseEntity<>(newMedia, HttpStatus.CREATED);
@@ -107,6 +108,7 @@ public class FilmSerieController {
                         // Fetch movie trailer
                         movie = getMovieTrailerUrl(movieId, apiKey , movie );
                         System.out.println("Trailer URL: " + movie.getURLTrailer());
+                        System.out.println("Picture SRC: " + movie.getImgSrc());
                         System.out.println();
                         break;
                     }
@@ -141,6 +143,8 @@ public class FilmSerieController {
 
             if (resultsNode.isArray() && resultsNode.size() > 0) {
                 String key = resultsNode.get(0).get("key").asText();
+                String path = "https://img.youtube.com/vi/" + key + "/0.jpg";
+                movie.setImgSrc(path);
                 movie.setURLTrailer("https://www.youtube.com/embed/" + key+"?showinfo=0");
             }
         } catch (Exception e) {

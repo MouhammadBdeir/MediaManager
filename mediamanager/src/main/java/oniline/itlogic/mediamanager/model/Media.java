@@ -14,12 +14,13 @@ public class Media {
     private String regisseur;
     private String veroeffentlichungsjahr;
     private String URLTrailer;
+    private String imgSrc;
     @Column(columnDefinition = "LONGTEXT")
     private String beschreibung;
     @Column(nullable = false, updatable = false)
     private String mediaCode;
 
-    public Media(Long id, String titel,String URLTrailer, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
+    public Media(Long id, String titel,String URLTrailer, String genre, String regisseur, String veroeffentlichungsjahr, String beschreibung, String mediaCode,String imgSrc) {
         this.id = id;
         this.URLTrailer=URLTrailer;
         this.titel = titel;
@@ -28,9 +29,10 @@ public class Media {
         this.veroeffentlichungsjahr = veroeffentlichungsjahr;
         this.beschreibung = beschreibung;
         this.mediaCode = mediaCode;
+        this.imgSrc = imgSrc;
     }
 
-    public Media(String titel, String genre, String regisseur, String URLTrailer,String veroeffentlichungsjahr, String beschreibung, String mediaCode) {
+    public Media(String titel, String genre, String regisseur, String URLTrailer,String veroeffentlichungsjahr, String beschreibung, String mediaCode,String imgSrc) {
         this.titel = titel;
         this.URLTrailer=URLTrailer;
         this.genre = genre;
@@ -38,10 +40,20 @@ public class Media {
         this.veroeffentlichungsjahr = veroeffentlichungsjahr;
         this.beschreibung = beschreibung;
         this.mediaCode = mediaCode;
+        this.imgSrc = imgSrc;
     }
 
     public Media() {
 
+    }
+
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+
+    public void setImgSrc(String imgSrc) {
+        this.imgSrc = imgSrc;
     }
 
     public String getMediaCode() {

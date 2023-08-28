@@ -4,4 +4,5 @@ export interface FilmSerien{
     titel: string;
     beschreibung: string;
     veroeffentlichungsjahr: String
+    imgSrc:string
 }

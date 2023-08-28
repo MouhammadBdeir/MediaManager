@@ -10,6 +10,7 @@ public class Movie {
     private String director; // Hinweis: Diese Information muss von einer anderen Quelle bezogen werden
     private String[] genres; // Hinweis: Diese Information muss von einer anderen Quelle bezogen werden
     private String URLTrailer;
+    private  String imgSrc;
     // Standardkonstruktor (wird von Jackson benötigt)
     public Movie() {}
 
@@ -60,6 +61,13 @@ public class Movie {
 
     public void setGenres(String[] genres) {
         this.genres = genres;
+    }
+
+    public String getImgSrc() {
+        return imgSrc;
+    }
+    public void setImgSrc(String path) {
+        this.imgSrc=path;
     }
 }
 

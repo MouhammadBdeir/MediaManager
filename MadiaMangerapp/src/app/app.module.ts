@@ -17,6 +17,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { FooterComponent } from './footer/footer.component'; 
 import { SafePipe } from './safe.pipe';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { SafePipe } from './safe.pipe';
     NavbarComponent,
     UserHomeComponent,
     FooterComponent,
-    SafePipe ,
+    SafePipe,
+    HeaderComponent ,
 
   ],
   imports: [
