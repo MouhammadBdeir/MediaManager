@@ -14,9 +14,10 @@ export class MovieDetailsComponent implements OnInit {
   constructor(
      private route: ActivatedRoute,
      private mediaService: MediaService
-    ) {}
+    ) { }
 
   ngOnInit(): void {
+    
     const id = this.route.snapshot.paramMap.get('id'); 
     const movieId = parseInt(id!, 10); 
 

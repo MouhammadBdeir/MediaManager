@@ -1,6 +1,7 @@
 import { Component, HostListener } from '@angular/core';
 import { FilmSerien } from '../media/media';
 import { MediaService } from '../media/media.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,12 +10,14 @@ import { MediaService } from '../media/media.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  movies: FilmSerien[] | undefined;
+  movies!: FilmSerien[];
   constructor(
     private mediaService: MediaService,
+    private router: Router,
   ){}
   ngOnInit() {
     this.getMedien();
+    
   }
   getMedien() {
     this.mediaService.getMedien().subscribe(
@@ -56,5 +59,8 @@ export class HeaderComponent {
 
   resumeSlider() {
     this.pausedIndex = null;
+  }
+  reload(id:Number){
+    this.router.navigateByUrl('/movie/'+id, );
   }
 }

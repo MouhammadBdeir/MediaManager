@@ -53,11 +53,88 @@ public class BenutzerprofilController {
     }
 
     @PutMapping("api/v1/registration/benuzter/update")
-    public ResponseEntity<Benutzerprofil> updateBenutzerprofil(@RequestBody Benutzerprofil benutzerprofil){
-        Benutzerprofil updatedBenutzerprofil = benutzerprofilService.updateBenutzerprofil(benutzerprofil);
-        return new ResponseEntity<>(updatedBenutzerprofil, HttpStatus.OK);
+    public ResponseEntity<Benutzerprofil> updateBenutzerprofil(@RequestBody Benutzerprofil updatedBenutzerprofil) {
+        Benutzerprofil existingBenutzerprofil = benutzerprofilService.findBenutzerprofilById(updatedBenutzerprofil.getId());
 
+        // Überprüfen und aktualisieren Sie alle Attribute, die Sie ändern möchten
+
+        if (updatedBenutzerprofil.getBenutzername() != null) {
+            existingBenutzerprofil.setBenutzername(updatedBenutzerprofil.getBenutzername());
+        }
+
+        if (updatedBenutzerprofil.getEmail() != null) {
+            existingBenutzerprofil.setEmail(updatedBenutzerprofil.getEmail());
+        }
+
+        if (updatedBenutzerprofil.getGoogleId() != null) {
+            existingBenutzerprofil.setGoogleId(updatedBenutzerprofil.getGoogleId());
+        }
+
+        if (updatedBenutzerprofil.getPassword() != null) {
+            existingBenutzerprofil.setPassword(updatedBenutzerprofil.getPassword());
+        }
+
+        if (updatedBenutzerprofil.getBenutzerRole() != null) {
+            existingBenutzerprofil.setBenutzerRole(updatedBenutzerprofil.getBenutzerRole());
+        }
+
+        if (updatedBenutzerprofil.getLocked() != null) {
+            existingBenutzerprofil.setLocked(updatedBenutzerprofil.getLocked());
+        }
+
+        if (updatedBenutzerprofil.getEnabled() != null) {
+            existingBenutzerprofil.setEnabled(updatedBenutzerprofil.getEnabled());
+        }
+
+        Benutzerprofil savedBenutzerprofil = benutzerprofilService.updateBenutzerprofil(existingBenutzerprofil);
+
+        return new ResponseEntity<>(savedBenutzerprofil, HttpStatus.OK);
     }
+    @PutMapping("benuzter/update/{id}")
+    public ResponseEntity<Benutzerprofil> updateBenutzerprofil(@PathVariable("id") Long id,@RequestBody Benutzerprofil updatedBenutzerprofil,Authentication authentication) {
+        Benutzerprofil existingBenutzerprofil = benutzerprofilService.findBenutzerprofilById(id);
+
+       if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        Benutzerprofil userDetails = (Benutzerprofil) authentication.getPrincipal();
+        BenutzerRole r = BenutzerRole.ADMIN;
+         System.out.println(userDetails);
+        if(userDetails.getBenutzerRole()==r){
+            if (updatedBenutzerprofil.getBenutzername() != null) {
+                existingBenutzerprofil.setBenutzername(updatedBenutzerprofil.getBenutzername());
+            }
+
+            if (updatedBenutzerprofil.getEmail() != null) {
+                existingBenutzerprofil.setEmail(updatedBenutzerprofil.getEmail());
+            }
+
+            if (updatedBenutzerprofil.getGoogleId() != null) {
+                existingBenutzerprofil.setGoogleId(updatedBenutzerprofil.getGoogleId());
+            }
+
+            if (updatedBenutzerprofil.getPassword() != null) {
+                existingBenutzerprofil.setPassword(updatedBenutzerprofil.getPassword());
+            }
+
+            if (updatedBenutzerprofil.getBenutzerRole() != null) {
+                existingBenutzerprofil.setBenutzerRole(updatedBenutzerprofil.getBenutzerRole());
+            }
+
+            if (updatedBenutzerprofil.getLocked() != null) {
+                existingBenutzerprofil.setLocked(updatedBenutzerprofil.getLocked());
+            }
+
+            if (updatedBenutzerprofil.getEnabled() != null) {
+                existingBenutzerprofil.setEnabled(updatedBenutzerprofil.getEnabled());
+            }
+
+            Benutzerprofil savedBenutzerprofil = benutzerprofilService.updateBenutzerprofil(existingBenutzerprofil);
+            return new ResponseEntity<>(savedBenutzerprofil, HttpStatus.OK);
+        }
+        else return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
     @DeleteMapping("api/v1/registration/delete/{id}")
     public ResponseEntity<?> deleteBenutzerprofil(@PathVariable("id") Long id){
         benutzerprofilService.deleteBenutzerprofil(id);

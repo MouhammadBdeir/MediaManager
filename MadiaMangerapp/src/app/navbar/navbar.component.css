@@ -22,6 +22,13 @@
   font-family: Arial, sans-serif;
   color: #F2B035;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  transition: transform 0.3s ease-in-out;
+}
+.containerLogo:hover .logo {
+  transform: rotate(360deg); 
+}
+.text-center:hover {
+    transform: rotate(360deg);
 }
 .logo{
   color: #F2B035;

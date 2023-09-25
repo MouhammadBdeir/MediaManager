@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Benutzerprofile } from './benutzer';
 import { environment } from 'src/environments/environment';
@@ -24,6 +24,9 @@ export class BenutzerService {
   public deleteBenuzter(benutzerId : number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/api/v1/registration/delete/${benutzerId}`, { withCredentials: true });
   }
-  
+  public updateBenuzterByAdmin(benutzer : Benutzerprofile,benutzerId : number): Observable<Benutzerprofile> {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.put<Benutzerprofile>(`${this.apiServerUrl}/benuzter/update/${benutzerId}`, benutzer, {headers, withCredentials: true });
+  }
   
 }

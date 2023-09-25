@@ -1,7 +1,7 @@
 <div class="header-slider" style="background-color: transparent;">
     <div class="card-slider-container" >
         <div *ngFor="let movie of movies; let i = index" class="card-slider-item" [class.active]="i === activeIndex">
-            <a [routerLink]="['/movie', movie.id]">
+            <a [routerLink]="['/movie', movie.id]" (click)="reload(movie.id)" >
             <div class="card-flipper"  [class.paused]="i === pausedIndex" (mouseover)="pauseSlider(i)"
                 (mouseout)="resumeSlider()">
                 <div class="container d-flex align-items-center justify-content-center flex-wrap" >

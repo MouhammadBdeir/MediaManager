@@ -28,6 +28,8 @@ export class MediaComponent implements OnInit {
   errorMessage: string | null = null;
   @ViewChild('editModalElement')
   editModalElement!: ElementRef;
+  @ViewChild('addkategorieModalElement')
+  addkategorieModalElement!: ElementRef;
   @ViewChild('editBnutzerModalElement')
   editBnutzerModalElement!: ElementRef;
   @ViewChild('createModalElement')
@@ -41,6 +43,7 @@ export class MediaComponent implements OnInit {
     beschreibung: '',
     veroeffentlichungsjahr: '',
     imgSrc:'',
+    catigorie:''
   };
   editBenutzerData: Benutzerprofile = {
     id: 0,
@@ -55,6 +58,7 @@ export class MediaComponent implements OnInit {
     beschreibung: '',
     veroeffentlichungsjahr: '',
     imgSrc:'',
+    catigorie:''
   };
   constructor(private mediaService: MediaService,
     private formBuilder: FormBuilder,
@@ -107,14 +111,18 @@ export class MediaComponent implements OnInit {
     this.editMediaData = { ...media };
     this.editModalElement.nativeElement.style.display = "block";
   }
+  openEditModalkategorie(media: FilmSerien) {
+    this.editMediaData = { ...media };
+    this.addkategorieModalElement.nativeElement.style.display = "block";
+  }
   closeEditModal() {
     this.editModalElement.nativeElement.style.display = "none";
+    this.addkategorieModalElement.nativeElement.style.display = "none";
+    this.editBnutzerModalElement.nativeElement.style.display  = "none";
   }
   saveEditMedia() {
-   // Hier erfolgt die Logik zum Speichern der bearbeiteten Daten
   this.mediaService.update(this.editMediaData).subscribe(
     () => {
-      // Erfolgreich aktualisiert, hier kannst du die entsprechende Aktion ausführen, wie z.B. Aktualisieren der Medienliste
       this.getMedien();
       this.showSuccessMessage("Speichern erfolgreich!")
       this.errorMessage = null;
@@ -127,6 +135,20 @@ export class MediaComponent implements OnInit {
   );
     this.closeEditModal();
   }
+  saveAddcategori(id:number, cat: string) {
+   this.mediaService.addCategori(id,cat).subscribe(
+     () => {
+       this.showSuccessMessage("Speichern erfolgreich!")
+       this.errorMessage = null;
+     },
+     (error) => {
+       console.log(error);
+       this.successMessage = null;
+       this.showErrorMessage ("Fehler beim Speichern.");
+     }
+   );
+     this.closeEditModal();
+   }
   openCreateModal() {
     this.createModalElement.nativeElement.style.display = 'block';
   }
@@ -160,19 +182,21 @@ export class MediaComponent implements OnInit {
   editBenutzer(benutzer: Benutzerprofile) {
     this.editBenutzerData = { ...benutzer };
     this.editBnutzerModalElement.nativeElement.style.display = "block";
-  }
-  saveEditBenutzer() {
-    // Hier erfolgt die Logik zum Speichern der bearbeiteten Daten
-   this.benutzerService.updateBenuzter(this.editBenutzerData).subscribe(
-     () => {
-       // Erfolgreich aktualisiert, hier kannst du die entsprechende Aktion ausführen, wie z.B. Aktualisieren der Medienliste
-       this.getMedien();
-     },
-     (error) => {
-       console.log(error);
-     }
-   );
-     this.closeEditModal();
+  } 
+  saveEditBenutzer(id: number) {
+    this.benutzerService.updateBenuzterByAdmin(this.editBenutzerData, id).subscribe(
+      () => {
+        this.getMedien();
+        this.showSuccessMessage("Speichern erfolgreich!");
+        this.errorMessage = null;
+      },
+      (error) => {
+        console.log(error);
+        this.successMessage = null;
+        this.showErrorMessage("Fehler beim Speichern.");
+      }
+    );
+    this.closeEditModal();
   }
   logout() {
     this.authService.logout();

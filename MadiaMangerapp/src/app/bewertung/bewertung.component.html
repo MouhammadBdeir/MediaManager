@@ -1,10 +1,10 @@
-
 <hr>
 <h5 class="card-title commenter gold-color">Kommentare</h5>
-<div class="card-body scrollable" >
+<div class="card-body scrollable">
   <div *ngFor="let comment of comments" class="comment-item" style="margin-top: 10px;">
     <div class="comment-header">
-      <div class="dropdown" *ngIf="loggedInRole === 'ADMIN' || loggedInUserName === comment.benutzerprofil.benutzername ">
+      <div class="dropdown"
+        *ngIf="loggedInRole === 'ADMIN' || loggedInUserName === comment.benutzerprofil.benutzername ">
         <button class="dropdown-btn" (click)="toggleDropdown($event)">
           <span class="dot"></span>
           <span class="dot"></span>
@@ -20,12 +20,13 @@
       </span>
       <div class="star-rating" style="margin-left: 20px;">
         <span [ngStyle]="{ 'width.%': comment.bewertungswert * 20 }">
-          <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]" [ngClass]="{ 'selected': star <= comment.bewertungswert }">&#9733;</span>
+          <span class="star" *ngFor="let star of [1, 2, 3, 4, 5]"
+            [ngClass]="{ 'selected': star <= comment.bewertungswert }">&#9733;</span>
         </span>
       </div>
     </div>
     <p class="comment-text" style="max-width: 88%;">
-      {{ comment.kommentar }} 
+      {{ comment.kommentar }}
     </p>
     <hr style="max-width: 85%;">
   </div>
@@ -34,30 +35,21 @@
   <div class="rating-container">
     <span class="rating-title">Bewertung: </span>
     <div class="star-rating" (mouseleave)="unhoverStars()">
-      <span
-        *ngFor="let star of [1, 2, 3, 4, 5]"
-        class="star"
-        [ngClass]="{
+      <span *ngFor="let star of [1, 2, 3, 4, 5]" class="star" [ngClass]="{
           'selected': star <= selectedStars,
           'hovered': star <= hoveredStars && star <= selectedStars
-        }"
-        [id]="'star-' + star"
-        (click)="onStarClick(star)"
-        (mouseenter)="hoverStars(star)"
+        }" [id]="'star-' + star" (click)="onStarClick(star)" (mouseenter)="hoverStars(star)"
         (mouseleave)="unhoverStars()">
         &#9733;
       </span>
     </div>
     <span class="selected-stars">{{ selectedStars }} von 5 Sternen ausgewählt</span>
-    
+
     <span class="selected-stars" id="inputMedia.id">{{ selectedStars }} von 5 Sternen ausgewählt</span>
   </div>
-  <textarea 
-  [(ngModel)]="newComment"
-  id="media.id"
-  placeholder="Enter your comment"
-  required="required"
-  style="width: 100%; height: 80px;"></textarea>
+  <textarea [(ngModel)]="newComment" id="media.id" placeholder="Enter your comment" required="required"
+    style="width: 100%; height: 80px;"></textarea>
   <br>
-  <button (click)="addComment(inputMedia)" class="btn gold-color-background mt-2" [disabled]="isCommentEmpty()">Add Comment</button>
+  <button (click)="addComment(inputMedia)" class="btn gold-color-background mt-2" [disabled]="isCommentEmpty()">Add
+    Comment</button>
 </div>

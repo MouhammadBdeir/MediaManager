@@ -43,11 +43,7 @@ export class BewertungComponent implements OnInit, OnChanges {
   ) {}
   ngOnInit() {
     document.addEventListener('click', () => this.closeDropdown());
-    if (this.authService.checkAuthStatus()) {
-      this.getComments();
-    } else {
-      this.router.navigateByUrl('/login');
-    }
+   
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.benutzername && currentUser.email) {
       this.loggedInUserName = currentUser.benutzername;
@@ -65,7 +61,14 @@ export class BewertungComponent implements OnInit, OnChanges {
   }
 
   shouldShowDiv(): boolean {
-    return this.activatedRoute.snapshot.url[0]?.path !== 'media';
+    if(this.activatedRoute.snapshot.url[0]?.path !== 'media'){
+      if(this.activatedRoute.snapshot.url[0]?.path === 'movie'){
+        if(this.loggedInUserName){
+          return true
+        }
+      }
+    }
+    return false;
   }
   
 

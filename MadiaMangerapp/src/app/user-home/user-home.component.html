@@ -1,20 +1,23 @@
 <app-navbar></app-navbar>
-<div class="container mt-4" >
+<div class="container mt-4">
   <div class="row">
     <div class="col-md-4" *ngFor="let media of medien">
-      <div class="card mb-4 dynamic-effect">
-        <div class="col-md-12">
-        <div class="watch-responsive watch-responsive-16by9">
-          <iframe class="watch-responsive-item" [src]="media.urltrailer | safe" width="100%"></iframe>
+      <a [routerLink]="['/movie', media.id]">
+        <div class="card mb-4 dynamic-effect">
+          <div class="col-md-12">
+            <div class="watch-responsive watch-responsive-16by9">
+              <img [src]="media.imgSrc | safe" class="card-img-top" alt="{{ media.titel }}">
+            </div>
+          </div>
+          <div class="card-body">
+            <h5 class="card-title font-color-gold mb-3">{{ media.titel }}</h5>
+            <p class="card-text scrollable">{{ media.beschreibung }}</p>
+            <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr
+              }}
+            </p>
+          </div>
         </div>
-        </div>
-        <div class="card-body">
-          <h5 class="card-title font-color-gold mb-3">{{ media.titel }}</h5>
-          <p class="card-text scrollable" >{{ media.beschreibung }}</p>
-          <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
-          <app-bewertung [inputMedia]="media"></app-bewertung>
-        </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>

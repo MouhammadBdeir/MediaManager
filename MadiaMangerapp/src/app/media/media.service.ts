@@ -21,6 +21,9 @@ export class MediaService {
   public update(media : FilmSerien): Observable<FilmSerien> {
     return this.http.put<FilmSerien>(`${this.apiServerUrl}/api/update`, media, { withCredentials: true });
   }
+  public addCategori(mediaId : number, cat : string): Observable<FilmSerien> {
+    return this.http.post<FilmSerien>(`${this.apiServerUrl}/api/add/categories/8/Top`, { });
+  }
   public delete(mediaId : number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/api/delete/${mediaId}`, { withCredentials: true });
   }

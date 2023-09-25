@@ -80,7 +80,7 @@ body {
 
 .container .box {
     position: relative;
-    width: 400px;
+    width: 250px;
     height: 400px;
 
     transform-style: preserve-3d;
@@ -137,6 +137,8 @@ body {
 .container .box .body .content div {
     transform-style: preserve-3d;
     padding: 20px;
+    width: 100%;
+    height: 100%;
     background: linear-gradient(45deg, #026288, #0177a5);
     transform: translateZ(25px);
 }

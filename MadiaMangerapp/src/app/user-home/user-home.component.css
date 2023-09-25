@@ -26,4 +26,6 @@
   width: 0; 
   display: none; 
 }
-
+a{
+  color: transparent;
+}

@@ -1,14 +1,22 @@
 package oniline.itlogic.mediamanager.model;
 
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.*;
+import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 public class Benutzerprofil implements UserDetails {
     @SequenceGenerator(
@@ -23,7 +31,6 @@ public class Benutzerprofil implements UserDetails {
     )
     private Long id;
     private String benutzername;
-
     private String password;
     private String email;
     private String googleId;
@@ -32,21 +39,10 @@ public class Benutzerprofil implements UserDetails {
     private Boolean locked = false;
     private Boolean enabled = false;
 
-
-    public Benutzerprofil(Long id, String benutzername, String password, String email, String googleId, BenutzerRole benutzerRole) {
-        this.id = id;
-        this.benutzername = benutzername;
-        this.password = password;
-        this.email = email;
-        this.googleId = googleId;
-        this.benutzerRole =benutzerRole;
-    }
-
-    public Benutzerprofil( ) {
-
-    }
-
-
+    @ElementCollection
+    @CollectionTable(name = "authorities", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "authority")
+    private Set<String> authorities = new HashSet<>();
 
     public Benutzerprofil(String benutzername, String password, String email, String googleId, BenutzerRole benutzerRole) {
         this.benutzername = benutzername;
@@ -55,6 +51,9 @@ public class Benutzerprofil implements UserDetails {
         this.googleId = googleId;
         this.benutzerRole = benutzerRole;
     }
+
+
+
 
     public Long getId() {
         return id;
@@ -86,6 +85,12 @@ public class Benutzerprofil implements UserDetails {
         SimpleGrantedAuthority authority =
                 new SimpleGrantedAuthority(benutzerRole.name());
         return Collections.singletonList(authority);
+    }
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = new HashSet<>();
+        for (GrantedAuthority authority : authorities) {
+            this.authorities.add(authority.getAuthority());
+        }
     }
     public BenutzerRole getBenutzerRole() {
         return benutzerRole;

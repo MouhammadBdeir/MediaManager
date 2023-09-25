@@ -1,10 +1,11 @@
 package oniline.itlogic.mediamanager.controller;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import oniline.itlogic.mediamanager.model.Category;
 import oniline.itlogic.mediamanager.model.Media;
 import oniline.itlogic.mediamanager.model.Movie;
 import oniline.itlogic.mediamanager.service.BewertungService;
+import oniline.itlogic.mediamanager.service.CategoryService;
 import oniline.itlogic.mediamanager.service.FilmSerienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +24,13 @@ import java.util.List;
 @RequestMapping("/api")
 public class FilmSerieController {
     private final FilmSerienService filmSerienService;
-    private final BewertungService bewertungService;
+    private final CategoryService categoryService;
+
     @Autowired
-    public FilmSerieController(FilmSerienService filmSerienService,BewertungService bewertungService) {
-        this.bewertungService=bewertungService;
+    public FilmSerieController(FilmSerienService filmSerienService,CategoryService categoryService) {
+
         this.filmSerienService = filmSerienService;
+        this.categoryService=categoryService;
     }
     @GetMapping("/v1/registration/media/all")
     public ResponseEntity<List<Media>> getAllFilmSerien() {
@@ -54,6 +57,19 @@ public class FilmSerieController {
             System.err.println("Moive wurd nicht gefunden");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+    @PostMapping("/add/categories/{id}/{cat}")
+    public ResponseEntity<Media> addCategories(
+            @PathVariable("id") Long id,
+            @PathVariable("cat") String categoryString
+    ) {
+        Media media = filmSerienService.findFilmSerienById(id);
+        Category category = new Category(categoryString);
+        categoryService.addCategory(category);
+        List<Category> categories = media.getCategories();
+        categories.add(category);
+        Media updatedMedia = filmSerienService.updateFilmSerien(media);
+        return ResponseEntity.ok(updatedMedia);
     }
     @PutMapping("/update")
     public ResponseEntity<Media> updateFilmSerien(@RequestBody Media media){

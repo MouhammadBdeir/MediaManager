@@ -324,3 +324,6 @@ body .fc-widget-header a {
     width: 0; /* Safari and Chrome */
     display: none; /* Hide scrollbar for modern browsers */
   }
+  .btn{
+    margin-left: 5px
+  }

@@ -3,6 +3,7 @@ export interface FilmSerien{
     urltrailer: string;
     titel: string;
     beschreibung: string;
-    veroeffentlichungsjahr: String
-    imgSrc:string
+    veroeffentlichungsjahr: String;
+    imgSrc:string;
+    catigorie:string;
 }

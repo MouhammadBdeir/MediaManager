@@ -28,8 +28,9 @@
               <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
 
               <div class="pad-btm">
+                <button class="btn btn-primary" (click)="openEditModalkategorie(media)">Add Categorie</button>
                 <button class="btn btn-success" (click)="openEditModal(media)">Edit</button>
-                <button class="btn btn-danger" (click)="confirmDelete(media.id)" style="margin-left: 5px;">Delete</button>
+                <button class="btn btn-danger" (click)="confirmDelete(media.id)">Delete</button>
               </div>
               <app-bewertung [inputMedia]="media"></app-bewertung>
             </div>
@@ -112,7 +113,6 @@
       </div>
     </div>
   </div>
-  
  <!-- Modal -->
  <div #editBnutzerModalElement id="editModal" class="modal">
     <div class="modal-content">
@@ -126,6 +126,24 @@
         <label>Email:</label>
         <input [(ngModel)]="editBenutzerData.email" type="text">
       </div>
-      <button class="btn btn-primary" (click)="saveEditBenutzer()">Save</button>
+      <button class="btn btn-primary" (click)="saveEditBenutzer(editBenutzerData.id)">Save</button>
     </div>
   </div>
+   <!-- Modal -->
+   <div #addkategorieModalElement id="addkategorie" class="modal" >
+    <div class="modal-dialog modal-dialog-centered custom-modal-dialog" >
+      <div class="modal-content" style="background-color: #025373;">
+        <span class="close" (click)="closeEditModal()" style="color: #F2B035;
+        margin-left: 5px;
+        font-weight: bold;
+        font-size:larger;">&times;</span>
+        <h4 style="margin-left: 33%; color: #F2B035;">Kategorie hinzufügen Media</h4>
+        <div class="form-group">
+          <label for="addkategorie" style="margin-left: 5%; color: #F2B035;">Kategorie:</label>
+          <input id="addkategorie" style="margin-left: 5%;max-width: 90%; "
+            class="form-control" [(ngModel)]="editMediaData.catigorie" type="text">
+        </div>
+        <button class="btn"(click)="saveAddcategori(editMediaData.id,editMediaData.catigorie)" style="margin: 5%; background-color: #F2B035; color: #025373" type="submit">Save</button>
+    </div>
+  </div>
+</div>
