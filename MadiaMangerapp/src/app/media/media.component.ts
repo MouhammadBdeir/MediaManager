@@ -10,6 +10,7 @@ import {AuthService} from '../login/LoginService ';
 import {BewertungService} from '../bewertung/bewertung.server';
 import { Bewertung } from '../bewertung/bewertung';
 import { Observable, map, of } from 'rxjs';
+import { Category } from './Category';
 
 
 
@@ -43,8 +44,12 @@ export class MediaComponent implements OnInit {
     beschreibung: '',
     veroeffentlichungsjahr: '',
     imgSrc:'',
-    catigorie:''
+    categories:[]
   };
+  editCategory:Category={
+    id: 0,
+    name:''
+  }
   editBenutzerData: Benutzerprofile = {
     id: 0,
     benutzername: '',
@@ -58,7 +63,7 @@ export class MediaComponent implements OnInit {
     beschreibung: '',
     veroeffentlichungsjahr: '',
     imgSrc:'',
-    catigorie:''
+    categories:[]
   };
   constructor(private mediaService: MediaService,
     private formBuilder: FormBuilder,
@@ -79,8 +84,8 @@ export class MediaComponent implements OnInit {
     this.mediaService.getMedien().subscribe(
       (data: FilmSerien[]) => {
         this.medien = data;
-
-        console.log(data);
+        
+        console.log(this.medien);
       },
       (error) => {
         console.log(error);

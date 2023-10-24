@@ -1,3 +1,5 @@
+import { Category } from "./Category";
+
 export interface FilmSerien{
     id: number;
     urltrailer: string;
@@ -5,5 +7,5 @@ export interface FilmSerien{
     beschreibung: string;
     veroeffentlichungsjahr: String;
     imgSrc:string;
-    catigorie:string;
+    categories: Category[];
 }

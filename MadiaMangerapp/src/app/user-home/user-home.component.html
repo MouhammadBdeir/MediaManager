@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+<app-header></app-header>
 <div class="container mt-4">
   <div class="row">
     <div class="col-md-4" *ngFor="let media of medien">
@@ -11,6 +12,11 @@
           </div>
           <div class="card-body">
             <h5 class="card-title font-color-gold mb-3">{{ media.titel }}</h5>
+            <div class="pad-btm">
+              <div *ngFor="let category of media.categories" class="d-inline-block" >
+                  <div class="" style="background-color: #024873; color: #F2B035; padding: 3px; margin-left: 3px; box-shadow: #024873; font-weight: bold; border-radius: 5px;  border: 1px solid #F2B035;">{{ category.name }}</div>
+              </div>
+            </div>
             <p class="card-text scrollable">{{ media.beschreibung }}</p>
             <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr
               }}

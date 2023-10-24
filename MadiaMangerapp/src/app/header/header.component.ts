@@ -22,7 +22,8 @@ export class HeaderComponent {
   getMedien() {
     this.mediaService.getMedien().subscribe(
       (data: FilmSerien[]) => {
-        this.movies=data;
+        // Filtern Sie die Filme, deren Kategorie 'Top10' ist
+        this.movies = data.filter(movie => movie.categories.some(category => category.name === 'Top10'));
       },
       (error) => {
         console.log(error);

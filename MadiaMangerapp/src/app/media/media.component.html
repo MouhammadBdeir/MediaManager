@@ -24,6 +24,11 @@
           <div class="col-md-12">
             <div class="card-body" style="margin-left: 50px; height: 550px;">
               <h5 class="card-title">{{ media.titel }}</h5>
+              <div class="pad-btm">
+                <div *ngFor="let category of media.categories" class="d-inline-block" >
+                    <div class="" style="background-color: #024873; color: #F2B035; padding: 3px; margin-left: 3px; box-shadow: #024873; font-weight: bold; border-radius: 5px;  border: 1px solid #F2B035;">{{ category.name }}</div>
+                </div>
+              </div>
               <p class="card-text scrollable" >{{ media.beschreibung }}</p>
               <p class="card-text"><span style="font-weight: bold;">Release date:</span> {{ media.veroeffentlichungsjahr }}</p>
 
@@ -139,11 +144,11 @@
         font-size:larger;">&times;</span>
         <h4 style="margin-left: 33%; color: #F2B035;">Kategorie hinzufügen Media</h4>
         <div class="form-group">
-          <label for="addkategorie" style="margin-left: 5%; color: #F2B035;">Kategorie:</label>
-          <input id="addkategorie" style="margin-left: 5%;max-width: 90%; "
-            class="form-control" [(ngModel)]="editMediaData.catigorie" type="text">
+          <label for="editVeroeffentlichungsjahr" style="margin-left: 5%; color: #F2B035;">Kategorie:</label>
+          <input id="editVeroeffentlichungsjahr" style="margin-left: 5%;max-width: 90%; "
+            class="form-control" [(ngModel)]="editCategory.name" type="text">
         </div>
-        <button class="btn"(click)="saveAddcategori(editMediaData.id,editMediaData.catigorie)" style="margin: 5%; background-color: #F2B035; color: #025373" type="submit">Save</button>
+        <button class="btn btn-primary"  (click)="saveAddcategori(editMediaData.id,editCategory.name)" style="margin: 5%; background-color: #F2B035; color: #025373" type="submit">Save</button>
     </div>
   </div>
 </div>

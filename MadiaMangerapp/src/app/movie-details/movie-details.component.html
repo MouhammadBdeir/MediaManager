@@ -9,6 +9,11 @@
     </div>
     <div class="movie-info">
       <h2>{{ movie.titel }}</h2>
+      <div class="pad-btm">
+        <div *ngFor="let category of movie.categories" class="d-inline-block" >
+            <div class="" style="background-color: #024873; color: #F2B035; padding: 3px; margin-left: 3px; box-shadow: #024873; font-weight: bold; border-radius: 5px;  border: 1px solid #024873;">{{ category.name }}</div>
+        </div>
+      </div>
       <p>{{ movie.beschreibung }}</p>
       <app-bewertung [inputMedia]="movie"></app-bewertung>
     </div>

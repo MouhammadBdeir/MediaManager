@@ -1,3 +1,4 @@
+<!---->
 <app-navbar></app-navbar>
 <app-header></app-header>
 <div class="container">
@@ -15,17 +16,27 @@
       <div class="flip-card-container" style="--hue: 220">
         <div class="flip-card">
           <div class="card-front">
+            
             <figure>
-              <div class="img-bg"></div>
               <img [src]="media.imgSrc | safe" alt="Brohm Lake" height="200px" width="310px" style="position: fixed; top: -100px;">
-              <figcaption>Brohm Lake</figcaption>
+              <figcaption>Brohm Lake</figcaption> 
+              
             </figure>
+            
           
             <div class="row" style="background-color:#026288;  width: 100%; height: 180px; margin-top: 350px;">
-            <h3 style="color: white;   position: absolute; top:70%; left: 27%;">{{ media.titel }}</h3>
-            <p style="color: white;  position: absolute; top:80%; left: 27%;">{{ media.veroeffentlichungsjahr }}</p>
+              
+            <h3 style="color: white;   position: absolute; top:80%; left: 27%;">{{ media.titel }}</h3>
+            <p style="color: white;  position: absolute; top:90%; left: 27%;">{{ media.veroeffentlichungsjahr }}</p>
+            <div class="pad-btm" style="color: white;  position: absolute; top:70%; ">
+              <div *ngFor="let category of media.categories" class="d-inline-block" >
+                  <div class="" style="background-color: #024873; color: #F2B035; padding: 3px; margin-left: 3px; box-shadow: #024873; font-weight: bold; border-radius: 5px;  border: 1px solid #F2B035;">{{ category.name }}</div>
+              </div>
             </div>
           </div>
+            
+          </div>
+          
           <div class="card-back">
             <figure>
               <div class="img-bg"></div>
