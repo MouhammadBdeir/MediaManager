@@ -22,7 +22,10 @@ export class MediaService {
     return this.http.put<FilmSerien>(`${this.apiServerUrl}/api/update`, media, { withCredentials: true });
   }
   public addCategori(mediaId : number, cat : string): Observable<FilmSerien> {
-    return this.http.post<FilmSerien>(`${this.apiServerUrl}/api/add/categories/8/Top`, { });
+    return this.http.post<FilmSerien>(`${this.apiServerUrl}/api/add/categories/${mediaId}/${cat}`, {withCredentials: true  });
+  }
+  public deleteCategori(catId : number): Observable<void> {
+    return this.http.delete<void>(`${this.apiServerUrl}/api/categories/delete/${catId}`, { withCredentials: true });
   }
   public delete(mediaId : number): Observable<void> {
     return this.http.delete<void>(`${this.apiServerUrl}/api/delete/${mediaId}`, { withCredentials: true });

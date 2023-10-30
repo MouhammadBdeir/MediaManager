@@ -140,16 +140,22 @@ export class MediaComponent implements OnInit {
   );
     this.closeEditModal();
   }
+  deleteCategori(id:number){
+    this.mediaService.deleteCategori(id);
+
+  }
   saveAddcategori(id:number, cat: string) {
    this.mediaService.addCategori(id,cat).subscribe(
      () => {
+       this.authService.getCurrentUser;
        this.showSuccessMessage("Speichern erfolgreich!")
        this.errorMessage = null;
      },
      (error) => {
        console.log(error);
-       this.successMessage = null;
+       this.authService.getCurrentUser;
        this.showErrorMessage ("Fehler beim Speichern.");
+      
      }
    );
      this.closeEditModal();

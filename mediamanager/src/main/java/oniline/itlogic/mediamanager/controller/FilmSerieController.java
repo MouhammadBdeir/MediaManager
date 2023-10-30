@@ -76,6 +76,11 @@ public class FilmSerieController {
         Media updatedMedia = filmSerienService.updateFilmSerien(media);
         return new ResponseEntity<>(updatedMedia, HttpStatus.OK);
     }
+    @DeleteMapping("/categories/delete/{id}")
+    public ResponseEntity<?> deleteCategori(@PathVariable("id") Long id){
+        //TODO
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFilmSerien(@PathVariable("id") Long id){
         /*

@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors() // Enable CORS
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v*/registration/**" ,"/api/find/**").permitAll()
+                .antMatchers("/api/v*/registration/**" ,"/api/find/**","/api/add/categories/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

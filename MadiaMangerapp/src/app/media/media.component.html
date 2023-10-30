@@ -26,7 +26,10 @@
               <h5 class="card-title">{{ media.titel }}</h5>
               <div class="pad-btm">
                 <div *ngFor="let category of media.categories" class="d-inline-block" >
-                    <div class="" style="background-color: #024873; color: #F2B035; padding: 3px; margin-left: 3px; box-shadow: #024873; font-weight: bold; border-radius: 5px;  border: 1px solid #F2B035;">{{ category.name }}</div>
+                    <div class="" style="background-color: #024873; color: #F2B035; padding: 3px; margin-left: 3px; box-shadow: #024873; font-weight: bold; border-radius: 5px;  border: 1px solid #F2B035;">{{ category.name }}
+                      <div class="btn btn-danger" (click)="deleteCategori(category.id)" style="height: 5px; width: 5px;"></div>
+                    </div>
+                   
                 </div>
               </div>
               <p class="card-text scrollable" >{{ media.beschreibung }}</p>
