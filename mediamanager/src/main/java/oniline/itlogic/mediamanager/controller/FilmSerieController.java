@@ -18,7 +18,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -58,7 +60,7 @@ public class FilmSerieController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @PostMapping("/add/categories/{id}/{cat}")
+    @PostMapping("/categories/add/{id}/{cat}")
     public ResponseEntity<Media> addCategories(
             @PathVariable("id") Long id,
             @PathVariable("cat") String categoryString
@@ -71,16 +73,28 @@ public class FilmSerieController {
         Media updatedMedia = filmSerienService.updateFilmSerien(media);
         return ResponseEntity.ok(updatedMedia);
     }
+    @PostMapping("/categories/delete/{idMedia}/{idCat}")
+    public ResponseEntity<?> deleteCategori(
+            @PathVariable("idMedia") Long idMedia,
+            @PathVariable("idCat") Long idCat){
+        Media media = filmSerienService.findFilmSerienById(idMedia);
+        List<Category> categories = media.getCategories();
+        List<Category>newCat=new ArrayList<>();
+        for(Category cat: categories){
+            if (!Objects.equals(cat.getId(), idCat)){
+                newCat.add(cat);
+            }
+        }
+        media.setCategories(newCat);
+        Media updatedMedia = filmSerienService.updateFilmSerien(media);
+        return ResponseEntity.ok(updatedMedia);
+    }
     @PutMapping("/update")
     public ResponseEntity<Media> updateFilmSerien(@RequestBody Media media){
         Media updatedMedia = filmSerienService.updateFilmSerien(media);
         return new ResponseEntity<>(updatedMedia, HttpStatus.OK);
     }
-    @DeleteMapping("/categories/delete/{id}")
-    public ResponseEntity<?> deleteCategori(@PathVariable("id") Long id){
-        //TODO
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteFilmSerien(@PathVariable("id") Long id){
         /*

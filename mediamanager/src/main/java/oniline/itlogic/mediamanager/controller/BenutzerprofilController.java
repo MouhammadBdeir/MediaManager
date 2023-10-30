@@ -90,7 +90,7 @@ public class BenutzerprofilController {
 
         return new ResponseEntity<>(savedBenutzerprofil, HttpStatus.OK);
     }
-    @PutMapping("benuzter/update/{id}")
+    @PostMapping("benuzter/update/{id}")
     public ResponseEntity<Benutzerprofil> updateBenutzerprofil(@PathVariable("id") Long id,@RequestBody Benutzerprofil updatedBenutzerprofil,Authentication authentication) {
         Benutzerprofil existingBenutzerprofil = benutzerprofilService.findBenutzerprofilById(id);
 
